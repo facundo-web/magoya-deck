@@ -15,320 +15,345 @@
     <canvas id="netCanvas" width="1920" height="1080"></canvas>
     <div class="bg-glow"></div>
     <div class="bg-grid"></div>
+    <div class="bg-grain"></div>
 
     <img id="cornerMark" src="assets/logos/magoya-wordmark-white.svg" alt="Magoya">
 
     <section class="scene" data-scene="0" data-label="Intro">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">
-        <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.34em;text-transform:uppercase;color:#2ED47E;opacity:.9;animation:mgFade 1.6s both;">A Magoya knowledge experience</div>
+      <div class="mg-center">
+        <div class="mg-eyebrow center" style="animation:mgFade 1.6s both;">A Magoya knowledge experience</div>
       </div>
     </section>
 
     <section class="scene" data-scene="1" data-label="Manifesto">
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 200px;">
+      <div class="mg-center">
         <div style="max-width:1200px;">
-          <div style="font:800 58px/66px 'Manrope';letter-spacing:-.02em;color:#F7F5ED;animation:mgSceneIn .85s .05s both;">Agricultural software doesn’t fail on technology.</div>
-          <div style="font:800 58px/66px 'Manrope';letter-spacing:-.02em;color:#F7F5ED;margin-top:16px;animation:mgSceneIn .85s .65s both;">It fails on <span style="color:#2ED47E;">understanding</span>.</div>
-          <div style="font:400 23px/34px 'Manrope';color:#9CA3AF;margin-top:52px;animation:mgSceneIn .85s 1.7s both;">That’s the problem we’ve spent more than <span style="color:#F7F5ED;font-weight:600;">nine years</span> solving.</div>
+          <div class="mg-h1" style="animation:mgSceneIn .85s .05s both;">Agricultural software doesn’t fail on technology.</div>
+          <div class="mg-h1" style="margin-top:16px;animation:mgSceneIn .85s .65s both;">It fails on <span class="mg-accent">understanding<svg viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 20 3, 40 10, 60 5 S 90 2, 98 6"/></svg></span>.</div>
+          <div class="mg-body-lg" style="margin-top:52px;animation:mgSceneIn .85s 1.7s both;">That’s the problem we’ve spent more than <span style="color:var(--on-ink);font-weight:600;">nine years</span> solving.</div>
         </div>
       </div>
     </section>
 
     <section class="scene" data-scene="2" data-label="Logo">
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
-        <img src="assets/logos/magoya-wordmark-white.svg" alt="Magoya" style="height:104px;animation:mgSceneIn .9s .1s both;">
-        <div style="font:500 22px/30px 'Manrope';color:#9CA3AF;margin-top:30px;animation:mgSceneIn .9s .5s both;">Expert problem solvers for agribusiness.</div>
-        <button id="btnExplore" style="margin-top:52px;display:inline-flex;align-items:center;gap:10px;padding:0 30px;height:56px;border:none;border-radius:8px;background:#13BC64;color:#0A0E14;font:700 17px/1 'Manrope';cursor:pointer;box-shadow:0 8px 32px rgba(19,188,100,0.22);animation:mgSceneIn .9s .9s both;transition:background .15s;">
+      <div class="mg-center">
+        <img src="assets/logos/magoya-wordmark-white.svg" alt="Magoya" style="height:clamp(58px,8vw,104px);animation:mgSceneIn .9s .1s both;">
+        <div class="mg-body-lg" style="margin-top:30px;animation:mgSceneIn .9s .5s both;">Expert problem solvers for agribusiness.</div>
+        <button id="btnExplore" class="mg-btn-primary" style="margin-top:52px;animation:mgSceneIn .9s .9s both;">
           Explore
-          <span style="font-size:18px;transform:translateY(-1px);">→</span>
+          <span class="mg-arrow">→</span>
         </button>
       </div>
     </section>
 
     <section class="scene" data-scene="3" data-label="Why Magoya">
-      <div style="position:absolute;left:130px;top:0;bottom:0;width:880px;display:flex;flex-direction:column;justify-content:center;">
-        <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.3em;text-transform:uppercase;color:#2ED47E;animation:mgSceneIn .8s .05s both;">Why Magoya</div>
-        <div style="font:800 62px/70px 'Manrope';letter-spacing:-.02em;color:#F7F5ED;margin-top:24px;animation:mgSceneIn .85s .2s both;">Three things no one else <span style="color:#2ED47E;">combines</span>.</div>
-        <div style="font:400 22px/32px 'Manrope';color:#9CA3AF;margin-top:30px;max-width:560px;animation:mgSceneIn .85s .5s both;">Nine years with one focus: agricultural products that actually get used.</div>
+      <div class="mg-left">
+        <div class="mg-left-col">
+          <div class="mg-eyebrow" style="animation:mgSceneIn .8s .05s both;">Why Magoya</div>
+          <div class="mg-h1" style="margin-top:24px;animation:mgSceneIn .85s .2s both;">Three things no one else <span class="mg-accent">combines<svg viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 20 3, 40 10, 60 5 S 90 2, 98 6"/></svg></span>.</div>
+          <div class="mg-body-lg" style="margin-top:30px;max-width:560px;animation:mgSceneIn .85s .5s both;">Nine years with one focus: agricultural products that actually get used.</div>
+        </div>
       </div>
     </section>
 
     <section class="scene" data-scene="4" data-label="Pillar 1">
-      <div style="position:absolute;left:130px;top:0;bottom:0;width:860px;display:flex;flex-direction:column;justify-content:center;">
-        <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.28em;text-transform:uppercase;color:#2ED47E;animation:mgSceneIn .8s .05s both;">Pillar 01</div>
-        <div style="font:800 48px/56px 'Manrope';letter-spacing:-.015em;color:#F7F5ED;margin-top:18px;animation:mgSceneIn .85s .18s both;">Deep AgTech domain fluency</div>
-        <div style="font:400 20px/30px 'Manrope';color:#C9D1D9;margin-top:24px;max-width:620px;animation:mgSceneIn .85s .38s both;">Agronomists, engineers, designers, and product managers who think in crops, seeds, machine data, retail operations, and grower workflows.</div>
-        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;max-width:640px;animation:mgSceneIn .85s .58s both;">
-          <span style="padding:9px 15px;border-radius:8px;border:1px solid rgba(19,188,100,.32);background:rgba(19,188,100,.10);color:#8FE6B2;font:500 14px/1 'Manrope';">Seeds</span>
-          <span style="padding:9px 15px;border-radius:8px;border:1px solid rgba(19,188,100,.32);background:rgba(19,188,100,.10);color:#8FE6B2;font:500 14px/1 'Manrope';">Crop Protection</span>
-          <span style="padding:9px 15px;border-radius:8px;border:1px solid rgba(19,188,100,.32);background:rgba(19,188,100,.10);color:#8FE6B2;font:500 14px/1 'Manrope';">Machine Data</span>
-          <span style="padding:9px 15px;border-radius:8px;border:1px solid rgba(19,188,100,.32);background:rgba(19,188,100,.10);color:#8FE6B2;font:500 14px/1 'Manrope';">Agronomy</span>
-          <span style="padding:9px 15px;border-radius:8px;border:1px solid rgba(19,188,100,.32);background:rgba(19,188,100,.10);color:#8FE6B2;font:500 14px/1 'Manrope';">Retail</span>
-          <span style="padding:9px 15px;border-radius:8px;border:1px solid rgba(19,188,100,.32);background:rgba(19,188,100,.10);color:#8FE6B2;font:500 14px/1 'Manrope';">Sustainability</span>
-          <span style="padding:9px 15px;border-radius:8px;border:1px solid rgba(19,188,100,.32);background:rgba(19,188,100,.10);color:#8FE6B2;font:500 14px/1 'Manrope';">Yield</span>
-          <span style="padding:9px 15px;border-radius:8px;border:1px solid rgba(19,188,100,.32);background:rgba(19,188,100,.10);color:#8FE6B2;font:500 14px/1 'Manrope';">Field Operations</span>
+      <div class="mg-left">
+        <div class="mg-left-col">
+          <div class="mg-pillar-head" style="animation:mgSceneIn .8s .05s both;">
+            <span class="mg-icon mg-icon-md" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 21V10" stroke-linecap="round"/><path d="M12 10C12 10 6 10 6 4C12 4 12 10 12 10Z" stroke-linejoin="round"/><path d="M12 14C12 14 18 14 18 8C12 8 12 14 12 14Z" stroke-linejoin="round"/></svg></span>
+            <span class="mg-eyebrow">Pillar 01</span>
+          </div>
+          <div class="mg-h2" style="margin-top:18px;animation:mgSceneIn .85s .18s both;">Deep AgTech domain fluency</div>
+          <div class="mg-body-lg" style="margin-top:24px;max-width:620px;animation:mgSceneIn .85s .38s both;">Agronomists, engineers, designers, and product managers who think in crops, seeds, machine data, retail operations, and grower workflows.</div>
+          <div class="mg-chipset" style="margin-top:30px;max-width:640px;animation:mgSceneIn .85s .58s both;">
+            <span class="mg-tag">Seeds</span>
+            <span class="mg-tag">Crop Protection</span>
+            <span class="mg-tag">Machine Data</span>
+            <span class="mg-tag">Agronomy</span>
+            <span class="mg-tag">Retail</span>
+            <span class="mg-tag">Sustainability</span>
+            <span class="mg-tag">Yield</span>
+            <span class="mg-tag">Field Operations</span>
+          </div>
+          <div class="mg-quote" style="margin-top:30px;max-width:580px;animation:mgSceneIn .85s .78s both;">Agricultural products succeed when the team understands agriculture as deeply as it understands technology.</div>
         </div>
-        <div style="font:400 16px/24px 'Manrope';color:#6B7280;margin-top:30px;max-width:580px;border-left:2px solid rgba(19,188,100,.4);padding-left:18px;animation:mgSceneIn .85s .78s both;">Agricultural products succeed when the team understands agriculture as deeply as it understands technology.</div>
       </div>
     </section>
 
     <section class="scene" data-scene="5" data-label="Pillar 2">
-      <div style="position:absolute;left:130px;top:0;bottom:0;width:860px;display:flex;flex-direction:column;justify-content:center;">
-        <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.28em;text-transform:uppercase;color:#2ED47E;animation:mgSceneIn .8s .05s both;">Pillar 02</div>
-        <div style="font:800 48px/56px 'Manrope';letter-spacing:-.015em;color:#F7F5ED;margin-top:18px;animation:mgSceneIn .85s .18s both;">Built around your problem</div>
-        <div style="font:400 20px/30px 'Manrope';color:#C9D1D9;margin-top:24px;max-width:600px;animation:mgSceneIn .85s .38s both;">We don’t squeeze your problem into someone else’s product. We build the solution around your problem.</div>
-        <div style="position:relative;width:300px;height:120px;margin-top:36px;animation:mgFade .6s .5s both;">
-          <div style="position:absolute;left:0;top:30px;width:60px;height:60px;border:1.5px dashed rgba(255,255,255,.28);border-radius:6px;animation:mgBox 3.2s 1s infinite;"></div>
-          <div style="position:absolute;left:80px;top:30px;width:60px;height:60px;border:1.5px dashed rgba(255,255,255,.28);border-radius:6px;animation:mgBox 3.2s 1.15s infinite;"></div>
-          <div style="position:absolute;left:160px;top:30px;width:60px;height:60px;border:1.5px dashed rgba(255,255,255,.28);border-radius:6px;animation:mgBox 3.2s 1.3s infinite;"></div>
-          <div style="position:absolute;left:96px;top:26px;width:68px;height:68px;border:1.5px solid rgba(19,188,100,.55);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:mgForm 3.2s 1s infinite;">
-            <div style="width:14px;height:14px;border-radius:50%;background:#13BC64;box-shadow:0 0 16px rgba(19,188,100,.7);"></div>
+      <div class="mg-left">
+        <div class="mg-left-col">
+          <div class="mg-pillar-head" style="animation:mgSceneIn .8s .05s both;">
+            <span class="mg-icon mg-icon-md" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="4" width="10" height="10" rx="2"/><circle cx="15.5" cy="15.5" r="4.6"/></svg></span>
+            <span class="mg-eyebrow">Pillar 02</span>
           </div>
+          <div class="mg-h2" style="margin-top:18px;animation:mgSceneIn .85s .18s both;">Built around your problem</div>
+          <div class="mg-body-lg" style="margin-top:24px;max-width:600px;animation:mgSceneIn .85s .38s both;">We don’t squeeze your problem into someone else’s product. We build the solution around your problem.</div>
+          <div class="mg-formviz" style="margin-top:36px;animation:mgFade .6s .5s both;">
+            <div class="sq" style="left:0;animation:mgBox 3.2s 1s infinite;"></div>
+            <div class="sq" style="left:28%;animation:mgBox 3.2s 1.15s infinite;"></div>
+            <div class="sq" style="left:56%;animation:mgBox 3.2s 1.3s infinite;"></div>
+            <div class="ring" style="animation:mgForm 3.2s 1s infinite;"><div class="dot"></div></div>
+          </div>
+          <div class="mg-quote" style="margin-top:30px;max-width:560px;animation:mgSceneIn .85s .78s both;">Every organization has different systems, constraints, users, and goals. The solution should adapt to the problem — not the other way around.</div>
         </div>
-        <div style="font:400 16px/24px 'Manrope';color:#6B7280;margin-top:30px;max-width:560px;border-left:2px solid rgba(19,188,100,.4);padding-left:18px;animation:mgSceneIn .85s .78s both;">Every organization has different systems, constraints, users, and goals. The solution should adapt to the problem — not the other way around.</div>
       </div>
     </section>
 
     <section class="scene" data-scene="6" data-label="Pillar 3">
-      <div style="position:absolute;left:130px;top:0;bottom:0;width:880px;display:flex;flex-direction:column;justify-content:center;">
-        <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.28em;text-transform:uppercase;color:#2ED47E;animation:mgSceneIn .8s .05s both;">Pillar 03</div>
-        <div style="font:800 48px/56px 'Manrope';letter-spacing:-.015em;color:#F7F5ED;margin-top:18px;animation:mgSceneIn .85s .18s both;">The Magoya Method</div>
-        <div style="font:400 20px/30px 'Manrope';color:#C9D1D9;margin-top:24px;max-width:600px;animation:mgSceneIn .85s .38s both;">A proven path from deep dive to execution, closing every step with an agreement.</div>
-        <div style="display:flex;align-items:center;gap:14px;margin-top:34px;animation:mgSceneIn .85s .55s both;">
-          <span style="padding:11px 18px;border:1px solid rgba(255,255,255,.10);border-radius:9999px;color:#F7F5ED;font:600 15px/1 'Manrope';animation:mgLoop 4s 0s infinite;">Deep Dive</span>
-          <span style="color:#6B7280;font-size:16px;">→</span>
-          <span style="padding:11px 18px;border:1px solid rgba(255,255,255,.10);border-radius:9999px;color:#F7F5ED;font:600 15px/1 'Manrope';animation:mgLoop 4s 1s infinite;">Ideation</span>
-          <span style="color:#6B7280;font-size:16px;">→</span>
-          <span style="padding:11px 18px;border:1px solid rgba(255,255,255,.10);border-radius:9999px;color:#F7F5ED;font:600 15px/1 'Manrope';animation:mgLoop 4s 2s infinite;">Planning</span>
-          <span style="color:#6B7280;font-size:16px;">→</span>
-          <span style="padding:11px 18px;border:1px solid rgba(255,255,255,.10);border-radius:9999px;color:#F7F5ED;font:600 15px/1 'Manrope';animation:mgLoop 4s 3s infinite;">Execution</span>
-          <span style="color:#2ED47E;font-size:18px;margin-left:2px;">↻</span>
+      <div class="mg-left">
+        <div class="mg-left-col">
+          <div class="mg-pillar-head" style="animation:mgSceneIn .8s .05s both;">
+            <span class="mg-icon mg-icon-md" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 12a8 8 0 0 1 8-8c2.5 0 4.7 1.2 6 3" stroke-linecap="round"/><path d="M20 12a8 8 0 0 1-8 8c-2.5 0-4.7-1.2-6-3" stroke-linecap="round"/><path d="M17 4v3.5h-3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 20v-3.5h3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="mg-eyebrow">Pillar 03</span>
+          </div>
+          <div class="mg-h2" style="margin-top:18px;animation:mgSceneIn .85s .18s both;">The Magoya Method</div>
+          <div class="mg-body-lg" style="margin-top:24px;max-width:600px;animation:mgSceneIn .85s .38s both;">A proven path from deep dive to execution, closing every step with an agreement.</div>
+          <div class="mg-loop-row" style="margin-top:34px;animation:mgSceneIn .85s .55s both;">
+            <span class="mg-pill" style="animation:mgLoop 4s 0s infinite;">Deep Dive</span>
+            <span class="mg-loop-sep">→</span>
+            <span class="mg-pill" style="animation:mgLoop 4s 1s infinite;">Ideation</span>
+            <span class="mg-loop-sep">→</span>
+            <span class="mg-pill" style="animation:mgLoop 4s 2s infinite;">Planning</span>
+            <span class="mg-loop-sep">→</span>
+            <span class="mg-pill" style="animation:mgLoop 4s 3s infinite;">Execution</span>
+            <span class="on-accent" style="font-size:18px;margin-left:2px;">↻</span>
+          </div>
+          <div class="mg-small" style="margin-top:16px;animation:mgSceneIn .85s .68s both;">Each step seals with an agreement · Measure &amp; Evolve loops back to the deep dive.</div>
+          <div class="mg-quote" style="margin-top:32px;max-width:580px;animation:mgSceneIn .85s .78s both;">Experience is why we’re valuable. The method is why we’re effective.</div>
         </div>
-        <div style="font:500 14px/20px 'Manrope';color:#6B7280;margin-top:16px;animation:mgSceneIn .85s .68s both;">Each step seals with an agreement · Measure &amp; Evolve loops back to the deep dive.</div>
-        <div style="font:400 16px/24px 'Manrope';color:#6B7280;margin-top:32px;max-width:580px;border-left:2px solid rgba(19,188,100,.4);padding-left:18px;animation:mgSceneIn .85s .78s both;">Experience is why we’re valuable. The method is why we’re effective.</div>
       </div>
     </section>
 
-    <section class="scene" data-scene="7" data-label="Proof">
-      <div style="position:absolute;inset:0;animation:mgFade .7s both;">
-        <div style="position:absolute;top:62px;left:0;right:0;text-align:center;animation:mgSceneIn .8s .1s both;">
-          <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.32em;text-transform:uppercase;color:#2ED47E;">Proof of expertise</div>
-          <div style="font:400 17px/24px 'Manrope';color:#6B7280;margin-top:12px;">Agricultural expertise is accumulated one problem at a time.</div>
+    <section class="scene paper-scene" data-scene="7" data-label="Proof">
+      <div class="mg-hub" style="animation:mgFade .7s both;">
+        <div class="mg-hub-head" style="animation:mgSceneIn .8s .1s both;">
+          <div class="mg-eyebrow center">Proof of expertise</div>
+          <div class="mg-body" style="margin-top:12px;">Agricultural expertise is accumulated one problem at a time.</div>
         </div>
 
-        <svg viewBox="0 0 1920 1080" style="position:absolute;inset:0;width:1920px;height:1080px;z-index:1;pointer-events:none;">
-          <line x1="960" y1="520" x2="960" y2="200" stroke="rgba(19,188,100,0.28)" stroke-width="1"></line>
-          <line x1="960" y1="520" x2="1264" y2="421" stroke="rgba(19,188,100,0.28)" stroke-width="1"></line>
-          <line x1="960" y1="520" x2="1148" y2="779" stroke="rgba(19,188,100,0.28)" stroke-width="1"></line>
-          <line x1="960" y1="520" x2="772" y2="779" stroke="rgba(19,188,100,0.28)" stroke-width="1"></line>
-          <line x1="960" y1="520" x2="656" y2="421" stroke="rgba(19,188,100,0.28)" stroke-width="1"></line>
+        <svg class="mg-hub-svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <line x1="960" y1="520" x2="960" y2="200" stroke="rgba(244,239,232,0.22)" stroke-width="1.4"></line>
+          <line x1="960" y1="520" x2="1264" y2="421" stroke="rgba(244,239,232,0.22)" stroke-width="1.4"></line>
+          <line x1="960" y1="520" x2="1148" y2="779" stroke="rgba(244,239,232,0.22)" stroke-width="1.4"></line>
+          <line x1="960" y1="520" x2="772" y2="779" stroke="rgba(244,239,232,0.22)" stroke-width="1.4"></line>
+          <line x1="960" y1="520" x2="656" y2="421" stroke="rgba(244,239,232,0.22)" stroke-width="1.4"></line>
         </svg>
 
-        <div style="position:absolute;left:960px;top:520px;transform:translate(-50%,-50%);text-align:center;z-index:3;animation:mgSceneIn .9s .25s both;">
-          <div style="position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:300px;height:300px;border-radius:50%;border:1px solid rgba(19,188,100,.18);animation:mgPulseRing 4s ease-in-out infinite;"></div>
-          <div style="position:relative;font:800 152px/1 'Manrope';letter-spacing:-.04em;color:#F7F5ED;"><span id="count59">0</span></div>
-          <div style="position:relative;font:600 13px/18px 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#9CA3AF;margin-top:8px;">Agricultural problem deployments</div>
-          <div style="position:relative;font:400 14px/20px 'Manrope';color:#6B7280;margin-top:10px;max-width:340px;margin-left:auto;margin-right:auto;">64 documented client × problem intersections across agriculture.</div>
+        <div class="mg-hub-center" style="animation:mgSceneIn .9s .25s both;">
+          <div class="mg-hub-ring"></div>
+          <div class="mg-stat" style="position:relative;"><span id="count59">0</span></div>
+          <div class="mg-caption" style="position:relative;margin-top:8px;">Agricultural problem deployments</div>
+          <div class="mg-body" style="position:relative;margin-top:10px;max-width:340px;margin-left:auto;margin-right:auto;">64 documented client × problem intersections across agriculture.</div>
         </div>
 
-        <div data-open="domains" style="position:absolute;left:960px;top:200px;transform:translate(-50%,-50%);z-index:4;width:218px;padding:18px 20px;border-radius:16px;background:#0D1117;border:1px solid rgba(255,255,255,.09);text-align:center;cursor:pointer;transition:border-color .15s, box-shadow .15s, transform .15s;animation:mgSceneIn .8s .4s both;">
-          <div style="font:800 40px/1 'Manrope';color:#2ED47E;letter-spacing:-.02em;">22</div>
-          <div style="font:500 14px/18px 'Manrope';color:#C9D1D9;margin-top:8px;">Agricultural Problem Domains</div>
-        </div>
-        <div data-open="personas" style="position:absolute;left:1264px;top:421px;transform:translate(-50%,-50%);z-index:4;width:218px;padding:18px 20px;border-radius:16px;background:#0D1117;border:1px solid rgba(255,255,255,.09);text-align:center;cursor:pointer;transition:border-color .15s, box-shadow .15s, transform .15s;animation:mgSceneIn .8s .5s both;">
-          <div style="font:800 40px/1 'Manrope';color:#2ED47E;letter-spacing:-.02em;">8</div>
-          <div style="font:500 14px/18px 'Manrope';color:#C9D1D9;margin-top:8px;">User Personas</div>
-        </div>
-        <div data-open="stages" style="position:absolute;left:1148px;top:779px;transform:translate(-50%,-50%);z-index:4;width:218px;padding:18px 20px;border-radius:16px;background:#0D1117;border:1px solid rgba(255,255,255,.09);text-align:center;cursor:pointer;transition:border-color .15s, box-shadow .15s, transform .15s;animation:mgSceneIn .8s .6s both;">
-          <div style="font:800 40px/1 'Manrope';color:#2ED47E;letter-spacing:-.02em;">8</div>
-          <div style="font:500 14px/18px 'Manrope';color:#C9D1D9;margin-top:8px;">Product Development Stages</div>
-        </div>
-        <div data-open="orgs" style="position:absolute;left:772px;top:779px;transform:translate(-50%,-50%);z-index:4;width:218px;padding:18px 20px;border-radius:16px;background:#0D1117;border:1px solid rgba(255,255,255,.09);text-align:center;cursor:pointer;transition:border-color .15s, box-shadow .15s, transform .15s;animation:mgSceneIn .8s .7s both;">
-          <div style="font:800 40px/1 'Manrope';color:#2ED47E;letter-spacing:-.02em;">28</div>
-          <div style="font:500 14px/18px 'Manrope';color:#C9D1D9;margin-top:8px;">Agricultural Organizations</div>
-        </div>
-        <div data-open="countries" style="position:absolute;left:656px;top:421px;transform:translate(-50%,-50%);z-index:4;width:218px;padding:18px 20px;border-radius:16px;background:#0D1117;border:1px solid rgba(255,255,255,.09);text-align:center;cursor:pointer;transition:border-color .15s, box-shadow .15s, transform .15s;animation:mgSceneIn .8s .8s both;">
-          <div style="font:800 40px/1 'Manrope';color:#2ED47E;letter-spacing:-.02em;">10</div>
-          <div style="font:500 14px/18px 'Manrope';color:#C9D1D9;margin-top:8px;">Countries</div>
+        <div class="mg-hub-nodes">
+          <div data-open="domains" class="mg-hub-node mg-node" style="left:50%;top:18.52%;animation:mgSceneIn .8s .4s both;">
+            <div class="mg-stat-md">22</div>
+            <div class="mg-small" style="margin-top:8px;color:var(--on-ink);">Agricultural Problem Domains</div>
+          </div>
+          <div data-open="personas" class="mg-hub-node mg-node" style="left:65.83%;top:38.98%;animation:mgSceneIn .8s .5s both;">
+            <div class="mg-stat-md">8</div>
+            <div class="mg-small" style="margin-top:8px;color:var(--on-ink);">User Personas</div>
+          </div>
+          <div data-open="stages" class="mg-hub-node mg-node" style="left:59.79%;top:72.13%;animation:mgSceneIn .8s .6s both;">
+            <div class="mg-stat-md">8</div>
+            <div class="mg-small" style="margin-top:8px;color:var(--on-ink);">Product Development Stages</div>
+          </div>
+          <div data-open="orgs" class="mg-hub-node mg-node" style="left:40.21%;top:72.13%;animation:mgSceneIn .8s .7s both;">
+            <div class="mg-stat-md">28</div>
+            <div class="mg-small" style="margin-top:8px;color:var(--on-ink);">Agricultural Organizations</div>
+          </div>
+          <div data-open="countries" class="mg-hub-node mg-node" style="left:34.17%;top:38.98%;animation:mgSceneIn .8s .8s both;">
+            <div class="mg-stat-md">10</div>
+            <div class="mg-small" style="margin-top:8px;color:var(--on-ink);">Countries</div>
+          </div>
         </div>
 
-        <div style="position:absolute;bottom:52px;left:0;right:0;text-align:center;animation:mgFade 1s 1s both;">
-          <span style="font:500 14px/20px 'Manrope';color:#6B7280;">Select any node to explore the system →</span>
+        <div class="mg-hub-foot" style="animation:mgFade 1s 1s both;">
+          <span class="mg-small">Select any node to explore the system →</span>
         </div>
       </div>
     </section>
 
     <section class="scene" data-scene="8" data-label="Finale">
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 180px;">
-        <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.32em;text-transform:uppercase;color:#2ED47E;animation:mgFade 1.1s both;">The network, whole again</div>
-        <div style="display:flex;align-items:center;margin-top:40px;animation:mgSceneIn .85s .25s both;">
-          <div style="padding:0 34px;"><div style="font:800 40px/1 'Manrope';color:#2ED47E;letter-spacing:-.02em;">22</div><div style="font:500 11px/15px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#6B7280;margin-top:11px;">Problem Domains</div></div>
-          <div style="width:1px;height:54px;background:rgba(19,188,100,.25);"></div>
-          <div style="padding:0 34px;"><div style="font:800 40px/1 'Manrope';color:#2ED47E;letter-spacing:-.02em;">8</div><div style="font:500 11px/15px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#6B7280;margin-top:11px;">User Personas</div></div>
-          <div style="width:1px;height:54px;background:rgba(19,188,100,.25);"></div>
-          <div style="padding:0 34px;"><div style="font:800 40px/1 'Manrope';color:#2ED47E;letter-spacing:-.02em;">8</div><div style="font:500 11px/15px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#6B7280;margin-top:11px;">Dev Stages</div></div>
-          <div style="width:1px;height:54px;background:rgba(19,188,100,.25);"></div>
-          <div style="padding:0 34px;"><div style="font:800 40px/1 'Manrope';color:#2ED47E;letter-spacing:-.02em;">28</div><div style="font:500 11px/15px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#6B7280;margin-top:11px;">Organizations</div></div>
-          <div style="width:1px;height:54px;background:rgba(19,188,100,.25);"></div>
-          <div style="padding:0 34px;"><div style="font:800 40px/1 'Manrope';color:#2ED47E;letter-spacing:-.02em;">10</div><div style="font:500 11px/15px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#6B7280;margin-top:11px;">Countries</div></div>
+      <div class="mg-center">
+        <div class="mg-eyebrow center" style="animation:mgFade 1.1s both;">The network, whole again</div>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;row-gap:16px;margin-top:40px;animation:mgSceneIn .85s .25s both;">
+          <div style="padding:0 34px;"><div class="mg-stat-md">22</div><div class="mg-caption" style="margin-top:11px;">Problem Domains</div></div>
+          <div class="mg-divider" style="width:1px;height:54px;"></div>
+          <div style="padding:0 34px;"><div class="mg-stat-md">8</div><div class="mg-caption" style="margin-top:11px;">User Personas</div></div>
+          <div class="mg-divider" style="width:1px;height:54px;"></div>
+          <div style="padding:0 34px;"><div class="mg-stat-md">8</div><div class="mg-caption" style="margin-top:11px;">Dev Stages</div></div>
+          <div class="mg-divider" style="width:1px;height:54px;"></div>
+          <div style="padding:0 34px;"><div class="mg-stat-md">28</div><div class="mg-caption" style="margin-top:11px;">Organizations</div></div>
+          <div class="mg-divider" style="width:1px;height:54px;"></div>
+          <div style="padding:0 34px;"><div class="mg-stat-md">10</div><div class="mg-caption" style="margin-top:11px;">Countries</div></div>
         </div>
-        <div style="font:800 66px/72px 'Manrope';letter-spacing:-.025em;color:#F7F5ED;margin-top:60px;animation:mgSceneIn .9s .65s both;">One team.</div>
-        <div style="font:400 24px/34px 'Manrope';color:#9CA3AF;margin-top:28px;max-width:980px;animation:mgSceneIn .9s 1.1s both;">Code is a commodity. Experience in the problem — and building solutions around it — <span style="color:#F7F5ED;font-weight:600;">are not</span>.</div>
+        <div class="mg-display" style="margin-top:60px;animation:mgSceneIn .9s .65s both;">One team.</div>
+        <div class="mg-body-lg" style="margin-top:28px;max-width:980px;animation:mgSceneIn .9s 1.1s both;">Code is a commodity. Experience in the problem — and building solutions around it — <span style="color:var(--on-ink);font-weight:600;">are not</span>.</div>
       </div>
     </section>
 
-    <section class="scene" data-scene="9" data-label="Bridge">
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 200px;">
-        <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.32em;text-transform:uppercase;color:#2ED47E;animation:mgFade 1s both;">From map to engine</div>
-        <div style="font:400 22px/33px 'Manrope';color:#9CA3AF;margin-top:36px;max-width:900px;animation:mgSceneIn .85s .3s both;">You’ve seen the map: every stage a digital product goes through, and the proof that we’ve worked at all of them.</div>
-        <div style="font:400 22px/33px 'Manrope';color:#C9D1D9;margin-top:14px;animation:mgSceneIn .85s .9s both;">Now the engine.</div>
-        <div style="font:800 56px/64px 'Manrope';letter-spacing:-.02em;color:#F7F5ED;margin-top:44px;max-width:1100px;animation:mgSceneIn .9s 1.5s both;">The journey is the <span style="color:#2ED47E;">map</span>. The Method is the <span style="color:#2ED47E;">engine</span>.</div>
-        <div style="font:400 19px/28px 'Manrope';color:#6B7280;margin-top:30px;animation:mgSceneIn .9s 2.2s both;">Wherever your problem lives on the map, we work the same way.</div>
+    <section class="scene paper-scene" data-scene="9" data-label="Bridge">
+      <div class="mg-center">
+        <div class="mg-eyebrow center" style="animation:mgFade 1s both;">From map to engine</div>
+        <div class="mg-body-lg" style="margin-top:36px;max-width:900px;animation:mgSceneIn .85s .3s both;">You’ve seen the map: every stage a digital product goes through, and the proof that we’ve worked at all of them.</div>
+        <div class="mg-body" style="margin-top:14px;color:var(--scene-fg);animation:mgSceneIn .85s .9s both;">Now the engine.</div>
+        <div class="mg-h1" style="margin-top:44px;max-width:1100px;animation:mgSceneIn .9s 1.5s both;">The journey is the <span style="color:var(--accent);">map</span>. The Method is the <span style="color:var(--accent);">engine</span>.</div>
+        <div class="mg-small" style="margin-top:30px;animation:mgSceneIn .9s 2.2s both;">Wherever your problem lives on the map, we work the same way.</div>
       </div>
     </section>
 
-    <section class="scene" data-scene="10" data-label="Method">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:0 110px;">
-        <div style="width:100%;max-width:1560px;">
+    <section class="scene paper-scene" data-scene="10" data-label="Method">
+      <div class="mg-fill">
+        <div class="mg-fill-col">
           <div style="text-align:center;animation:mgSceneIn .8s .05s both;">
-            <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.3em;text-transform:uppercase;color:#2ED47E;">The Magoya Method</div>
-            <div style="font:800 54px/62px 'Manrope';letter-spacing:-.02em;color:#F7F5ED;margin-top:18px;">One method. <span style="color:#2ED47E;">Any problem.</span></div>
-            <div style="font:400 20px/30px 'Manrope';color:#9CA3AF;margin-top:14px;">Four steps. Every step closes with an agreement.</div>
+            <div class="mg-eyebrow center">The Magoya Method</div>
+            <div class="mg-h2" style="margin-top:18px;">One method. <span style="color:var(--accent);">Any problem.</span></div>
+            <div class="mg-body-lg" style="margin-top:14px;">Four steps. Every step closes with an agreement.</div>
           </div>
-          <div style="display:flex;gap:20px;margin-top:46px;animation:mgSceneIn .85s .25s both;">
-            <div style="flex:1;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px;">
-              <div style="font:600 12px/16px 'JetBrains Mono',monospace;color:#6B7280;">01</div>
-              <div style="font:700 25px/30px 'Manrope';color:#F7F5ED;margin-top:14px;">Deep Dive</div>
-              <div style="font:400 15px/22px 'Manrope';color:#9CA3AF;margin-top:12px;">Understand the problem before proposing the solution.</div>
-              <div style="font:600 11px/14px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#4B5563;margin-top:20px;">Closes with</div>
-              <div style="margin-top:10px;display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:9999px;background:rgba(19,188,100,.10);border:1px solid rgba(19,188,100,.32);"><span style="width:6px;height:6px;border-radius:50%;background:#13BC64;"></span><span style="font:600 13px/1 'Manrope';color:#8FE6B2;">Findings document</span></div>
+          <div class="mg-row" style="margin-top:46px;animation:mgSceneIn .85s .25s both;">
+            <div class="mg-card">
+              <span class="mg-icon mg-icon-card" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="10.5" cy="10.5" r="6"/><path d="M20 20l-5-5" stroke-linecap="round"/></svg></span>
+              <div class="mg-num" style="margin-top:14px;">01</div>
+              <div class="mg-h4" style="margin-top:14px;">Deep Dive</div>
+              <div class="mg-body" style="margin-top:12px;">Understand the problem before proposing the solution.</div>
+              <div class="mg-caption" style="margin-top:20px;">Closes with</div>
+              <div class="mg-pill-tag" style="margin-top:10px;"><span class="dot"></span>Findings document</div>
             </div>
-            <div style="flex:1;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px;">
-              <div style="font:600 12px/16px 'JetBrains Mono',monospace;color:#6B7280;">02</div>
-              <div style="font:700 25px/30px 'Manrope';color:#F7F5ED;margin-top:14px;">Ideation</div>
-              <div style="font:400 15px/22px 'Manrope';color:#9CA3AF;margin-top:12px;">Co-create and evaluate multiple ways to address the top priorities.</div>
-              <div style="font:600 11px/14px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#4B5563;margin-top:20px;">Closes with</div>
-              <div style="margin-top:10px;display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:9999px;background:rgba(19,188,100,.10);border:1px solid rgba(19,188,100,.32);"><span style="width:6px;height:6px;border-radius:50%;background:#13BC64;"></span><span style="font:600 13px/1 'Manrope';color:#8FE6B2;">Ideation workshop</span></div>
+            <div class="mg-card">
+              <span class="mg-icon mg-icon-card" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 3v3M12 18v3M4.5 12h3M16.5 12h3M6.8 6.8l2 2M15.2 15.2l2 2M17.2 6.8l-2 2M8.8 15.2l-2 2" stroke-linecap="round"/><circle cx="12" cy="12" r="2.6"/></svg></span>
+              <div class="mg-num" style="margin-top:14px;">02</div>
+              <div class="mg-h4" style="margin-top:14px;">Ideation</div>
+              <div class="mg-body" style="margin-top:12px;">Co-create and evaluate multiple ways to address the top priorities.</div>
+              <div class="mg-caption" style="margin-top:20px;">Closes with</div>
+              <div class="mg-pill-tag" style="margin-top:10px;"><span class="dot"></span>Ideation workshop</div>
             </div>
-            <div style="flex:1;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px;">
-              <div style="font:600 12px/16px 'JetBrains Mono',monospace;color:#6B7280;">03</div>
-              <div style="font:700 25px/30px 'Manrope';color:#F7F5ED;margin-top:14px;">Planning</div>
-              <div style="font:400 15px/22px 'Manrope';color:#9CA3AF;margin-top:12px;">Design the execution plan based on the chosen path.</div>
-              <div style="font:600 11px/14px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#4B5563;margin-top:20px;">Closes with</div>
-              <div style="margin-top:10px;display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:9999px;background:rgba(19,188,100,.10);border:1px solid rgba(19,188,100,.32);"><span style="width:6px;height:6px;border-radius:50%;background:#13BC64;"></span><span style="font:600 13px/1 'Manrope';color:#8FE6B2;">Action plan</span></div>
+            <div class="mg-card">
+              <span class="mg-icon mg-icon-card" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 18c3-1 3-4 6-4s3 3 6 3 3-4 4-5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="18" r="1.3"/><circle cx="20" cy="12" r="1.3"/></svg></span>
+              <div class="mg-num" style="margin-top:14px;">03</div>
+              <div class="mg-h4" style="margin-top:14px;">Planning</div>
+              <div class="mg-body" style="margin-top:12px;">Design the execution plan based on the chosen path.</div>
+              <div class="mg-caption" style="margin-top:20px;">Closes with</div>
+              <div class="mg-pill-tag" style="margin-top:10px;"><span class="dot"></span>Action plan</div>
             </div>
-            <div style="flex:1;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px;">
-              <div style="font:600 12px/16px 'JetBrains Mono',monospace;color:#6B7280;">04</div>
-              <div style="font:700 25px/30px 'Manrope';color:#F7F5ED;margin-top:14px;">Execution</div>
-              <div style="font:400 15px/22px 'Manrope';color:#9CA3AF;margin-top:12px;">Turn the plan into working outcomes.</div>
-              <div style="font:600 11px/14px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#4B5563;margin-top:20px;">Closes with</div>
-              <div style="margin-top:10px;display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:9999px;background:rgba(19,188,100,.10);border:1px solid rgba(19,188,100,.32);"><span style="width:6px;height:6px;border-radius:50%;background:#13BC64;"></span><span style="font:600 13px/1 'Manrope';color:#8FE6B2;">Shipped results</span></div>
+            <div class="mg-card">
+              <span class="mg-icon mg-icon-card" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 13l4 4 12-12" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <div class="mg-num" style="margin-top:14px;">04</div>
+              <div class="mg-h4" style="margin-top:14px;">Execution</div>
+              <div class="mg-body" style="margin-top:12px;">Turn the plan into working outcomes.</div>
+              <div class="mg-caption" style="margin-top:20px;">Closes with</div>
+              <div class="mg-pill-tag" style="margin-top:10px;"><span class="dot"></span>Shipped results</div>
             </div>
           </div>
-          <div style="text-align:center;margin-top:40px;animation:mgSceneIn .85s .6s both;"><div style="font:400 17px/26px 'Manrope';color:#6B7280;">Every step starts with alignment and ends with an agreement. Measure &amp; Evolve loops every outcome back to the deep dive.</div><div style="font:700 17px/26px 'Manrope';color:#C9D1D9;margin-top:8px;">Built to think. Designed to deliver.</div></div>
+          <div style="text-align:center;margin-top:40px;animation:mgSceneIn .85s .6s both;">
+            <div class="mg-body">Every step starts with alignment and ends with an agreement. Measure &amp; Evolve loops every outcome back to the deep dive.</div>
+            <div class="mg-h4" style="margin-top:8px;">Built to think. Designed to deliver.</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="scene" data-scene="11" data-label="Capabilities">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:0 110px;">
-        <div style="width:100%;max-width:1620px;">
+    <section class="scene paper-scene" data-scene="11" data-label="Capabilities">
+      <div class="mg-fill">
+        <div class="mg-fill-col">
           <div style="text-align:center;animation:mgSceneIn .8s .05s both;">
-            <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.3em;text-transform:uppercase;color:#2ED47E;">Capabilities</div>
-            <div style="font:800 52px/60px 'Manrope';letter-spacing:-.02em;color:#F7F5ED;margin-top:18px;">Full-stack capability inside <span style="color:#2ED47E;">one team</span>.</div>
-            <div style="font:500 17px/24px 'JetBrains Mono',monospace;letter-spacing:.04em;color:#9CA3AF;margin-top:16px;">Expert problem · Expert team · Custom engagement</div>
+            <div class="mg-eyebrow center">Capabilities</div>
+            <div class="mg-h2" style="margin-top:18px;">Full-stack capability inside <span style="color:var(--accent);">one team</span>.</div>
+            <div class="mg-caption" style="margin-top:16px;font-size:clamp(.8rem,.7rem+.3vw,1rem);letter-spacing:.04em;text-transform:none;">Expert problem · Expert team · Custom engagement</div>
           </div>
-          <div style="display:flex;gap:20px;margin-top:44px;animation:mgSceneIn .85s .25s both;">
-            <div style="flex:1;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:26px;">
-              <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#2ED47E;">Product &amp; UX</div>
-              <div style="height:1px;background:rgba(255,255,255,.08);margin:18px 0;"></div>
+          <div class="mg-row" style="margin-top:44px;animation:mgSceneIn .85s .25s both;">
+            <div class="mg-card">
+              <div class="mg-pillar-head"><span class="mg-icon mg-icon-card" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 4h4M4 4v4M20 4h-4M20 4v4M4 20h4M4 20v-4M20 20h-4M20 20v-4" stroke-linecap="round"/><circle cx="12" cy="12" r="3"/></svg></span><span class="mg-col-label">Product &amp; UX</span></div>
+              <div class="mg-divider on-paper" style="margin:18px 0;"></div>
               <div style="display:flex;flex-direction:column;gap:13px;">
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Product Management</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Project Management</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">UX/UI Design</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Content Strategy</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Research</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Product Management</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Project Management</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">UX/UI Design</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Content Strategy</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Research</div>
               </div>
             </div>
-            <div style="flex:1;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:26px;">
-              <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#2ED47E;">Engineering</div>
-              <div style="height:1px;background:rgba(255,255,255,.08);margin:18px 0;"></div>
+            <div class="mg-card">
+              <div class="mg-pillar-head"><span class="mg-icon mg-icon-card" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 6 3 12l6 6" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="mg-col-label">Engineering</span></div>
+              <div class="mg-divider on-paper" style="margin:18px 0;"></div>
               <div style="display:flex;flex-direction:column;gap:13px;">
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Software Engineering</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Mobile Engineering</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">DevOps</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Architecture</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Quality Assurance</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Software Engineering</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Mobile Engineering</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">DevOps</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Architecture</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Quality Assurance</div>
               </div>
             </div>
-            <div style="flex:1;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:26px;">
-              <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#2ED47E;">AI &amp; Data</div>
-              <div style="height:1px;background:rgba(255,255,255,.08);margin:18px 0;"></div>
+            <div class="mg-card">
+              <div class="mg-pillar-head"><span class="mg-icon mg-icon-card" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7.6 7.2 10.6 16.2M16.4 7.2 13.4 16.2M8 6h8" stroke-linecap="round"/></svg></span><span class="mg-col-label">AI &amp; Data</span></div>
+              <div class="mg-divider on-paper" style="margin:18px 0;"></div>
               <div style="display:flex;flex-direction:column;gap:13px;">
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">AI Engineering</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Data Engineering</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Machine Data</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">ETL &amp; Integrations</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Analytics</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">AI Engineering</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Data Engineering</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Machine Data</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">ETL &amp; Integrations</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Analytics</div>
               </div>
-              <div style="font:400 13px/19px 'Manrope';color:#6B7280;margin-top:16px;">Proven in the field, not in a slide — deployed where growers and advisors actually use it.</div>
+              <div class="mg-small" style="margin-top:16px;">Proven in the field, not in a slide — deployed where growers and advisors actually use it.</div>
             </div>
-            <div style="flex:1;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:26px;">
-              <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#2ED47E;">Adoption &amp; Field</div>
-              <div style="height:1px;background:rgba(255,255,255,.08);margin:18px 0;"></div>
+            <div class="mg-card">
+              <div class="mg-pillar-head"><span class="mg-icon mg-icon-card" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="6" r="2.4"/><path d="M6 20c0-4 2.7-6.5 6-6.5s6 2.5 6 6.5" stroke-linecap="round"/></svg></span><span class="mg-col-label">Adoption &amp; Field</span></div>
+              <div class="mg-divider on-paper" style="margin:18px 0;"></div>
               <div style="display:flex;flex-direction:column;gap:13px;">
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Agronomists</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Field Enablement</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Customer Success</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Training</div>
-                <div style="font:500 16px/22px 'Manrope';color:#C9D1D9;">Adoption Programs</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Agronomists</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Field Enablement</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Customer Success</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Training</div>
+                <div class="mg-h4" style="font-weight:500;font-size:1rem;">Adoption Programs</div>
               </div>
             </div>
           </div>
           <div style="text-align:center;margin-top:38px;animation:mgSceneIn .85s .55s both;">
-            <div style="font:600 19px/26px 'Manrope';color:#F7F5ED;">The method stays the same. The team changes. The engagement adapts.</div>
-            <div style="font:400 15px/22px 'Manrope';color:#6B7280;margin-top:10px;max-width:820px;margin-left:auto;margin-right:auto;">We design the team structure, operating model, and engagement approach around the problem you’re trying to solve.</div>
-            <div style="font:700 17px/24px 'Manrope';color:#2ED47E;margin-top:16px;">Your problem. Our experts. The right engagement.</div>
+            <div class="mg-h4">The method stays the same. The team changes. The engagement adapts.</div>
+            <div class="mg-small" style="margin-top:10px;max-width:820px;margin-left:auto;margin-right:auto;">We design the team structure, operating model, and engagement approach around the problem you’re trying to solve.</div>
+            <div class="mg-h4" style="margin-top:16px;color:var(--accent);">Your problem. Our experts. The right engagement.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="scene" data-scene="12" data-label="Results">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:0 110px;">
-        <div style="width:100%;max-width:1620px;">
+    <section class="scene paper-scene" data-scene="12" data-label="Results">
+      <div class="mg-fill">
+        <div class="mg-fill-col">
           <div style="text-align:center;animation:mgSceneIn .8s .05s both;">
-            <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.3em;text-transform:uppercase;color:#2ED47E;">Problems we’ve helped solve</div>
-            <div style="font:800 52px/60px 'Manrope';letter-spacing:-.02em;color:#F7F5ED;margin-top:18px;">Outcomes, not adjectives.</div>
+            <div class="mg-eyebrow center">Problems we’ve helped solve</div>
+            <div class="mg-h2" style="margin-top:18px;">Outcomes, not adjectives.</div>
           </div>
-          <div style="display:flex;gap:20px;margin-top:48px;animation:mgSceneIn .85s .25s both;">
-            <div style="flex:1;background:#0D1117;border:1px solid rgba(19,188,100,.20);border-radius:24px;padding:32px;box-shadow:0 8px 32px rgba(19,188,100,.08);display:flex;flex-direction:column;min-height:340px;">
-              <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#6B7280;">Field adoption</div>
-              <div style="font:700 22px/29px 'Manrope';color:#F7F5ED;margin-top:14px;">Increase field adoption</div>
+          <div class="mg-row" style="margin-top:48px;animation:mgSceneIn .85s .25s both;">
+            <div class="mg-card mg-card-result" style="display:flex;flex-direction:column;min-height:300px;">
+              <div class="mg-num">Field adoption</div>
+              <div class="mg-h4" style="margin-top:14px;">Increase field adoption</div>
               <div style="flex:1;"></div>
-              <div style="font:800 58px/1 'Manrope';color:#2ED47E;letter-spacing:-.03em;margin-top:30px;">70%</div>
-              <div style="font:400 15px/22px 'Manrope';color:#9CA3AF;margin-top:12px;">reduction in ticket resolution time.</div>
+              <div class="mg-stat-card" style="margin-top:30px;">70%</div>
+              <div class="mg-small" style="margin-top:12px;">reduction in ticket resolution time.</div>
             </div>
-            <div style="flex:1;background:#0D1117;border:1px solid rgba(19,188,100,.20);border-radius:24px;padding:32px;box-shadow:0 8px 32px rgba(19,188,100,.08);display:flex;flex-direction:column;min-height:340px;">
-              <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#6B7280;">Validation</div>
-              <div style="font:700 22px/29px 'Manrope';color:#F7F5ED;margin-top:14px;">Validate new ideas faster</div>
+            <div class="mg-card mg-card-result" style="display:flex;flex-direction:column;min-height:300px;">
+              <div class="mg-num">Validation</div>
+              <div class="mg-h4" style="margin-top:14px;">Validate new ideas faster</div>
               <div style="flex:1;"></div>
-              <div style="font:800 58px/1 'Manrope';color:#2ED47E;letter-spacing:-.03em;margin-top:30px;">2 mo</div>
-              <div style="font:400 15px/22px 'Manrope';color:#9CA3AF;margin-top:12px;">from kickoff to validation.</div>
+              <div class="mg-stat-card" style="margin-top:30px;">2 mo</div>
+              <div class="mg-small" style="margin-top:12px;">from kickoff to validation.</div>
             </div>
-            <div style="flex:1;background:#0D1117;border:1px solid rgba(19,188,100,.20);border-radius:24px;padding:32px;box-shadow:0 8px 32px rgba(19,188,100,.08);display:flex;flex-direction:column;min-height:340px;">
-              <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#6B7280;">Machine data</div>
-              <div style="font:700 22px/29px 'Manrope';color:#F7F5ED;margin-top:14px;">Machine data integration</div>
+            <div class="mg-card mg-card-result" style="display:flex;flex-direction:column;min-height:300px;">
+              <div class="mg-num">Machine data</div>
+              <div class="mg-h4" style="margin-top:14px;">Machine data integration</div>
               <div style="flex:1;"></div>
-              <div style="font:800 58px/1 'Manrope';color:#2ED47E;letter-spacing:-.03em;margin-top:30px;">50%</div>
-              <div style="font:400 15px/22px 'Manrope';color:#9CA3AF;margin-top:12px;">reduction in processing time.</div>
+              <div class="mg-stat-card" style="margin-top:30px;">50%</div>
+              <div class="mg-small" style="margin-top:12px;">reduction in processing time.</div>
             </div>
-            <div style="flex:1;background:#0D1117;border:1px solid rgba(19,188,100,.20);border-radius:24px;padding:32px;box-shadow:0 8px 32px rgba(19,188,100,.08);display:flex;flex-direction:column;min-height:340px;">
-              <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#6B7280;">Advisory platform</div>
-              <div style="font:700 22px/29px 'Manrope';color:#F7F5ED;margin-top:14px;">Agronomic recommendation platform</div>
+            <div class="mg-card mg-card-result" style="display:flex;flex-direction:column;min-height:300px;">
+              <div class="mg-num">Advisory platform</div>
+              <div class="mg-h4" style="margin-top:14px;">Agronomic recommendation platform</div>
               <div style="flex:1;"></div>
-              <div style="font:800 58px/1 'Manrope';color:#2ED47E;letter-spacing:-.03em;margin-top:30px;">25.000+</div>
-              <div style="font:400 15px/22px 'Manrope';color:#9CA3AF;margin-top:12px;">recommendations delivered.</div>
+              <div class="mg-stat-card" style="margin-top:30px;">25.000+</div>
+              <div class="mg-small" style="margin-top:12px;">recommendations delivered.</div>
             </div>
           </div>
         </div>
@@ -336,54 +361,62 @@
     </section>
 
     <section class="scene" data-scene="13" data-label="Discovery">
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 160px;">
-        <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.3em;text-transform:uppercase;color:#2ED47E;animation:mgSceneIn .8s .05s both;">Start with a discovery</div>
-        <div style="font:800 72px/78px 'Manrope';letter-spacing:-.025em;color:#F7F5ED;margin-top:20px;animation:mgSceneIn .85s .18s both;">Let’s map your <span style="color:#2ED47E;">problem</span>.</div>
-        <div style="font:400 20px/29px 'Manrope';color:#9CA3AF;margin-top:22px;max-width:780px;animation:mgSceneIn .85s .3s both;">We listen to the problem, play it back, and propose the way in: a Discovery.</div>
-        <div style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6B7280;margin-top:40px;animation:mgSceneIn .85s .36s both;">The first three steps of the Magoya Method — each closing with an agreed deliverable</div>
-        <div style="display:flex;gap:14px;margin-top:20px;animation:mgSceneIn .85s .4s both;">
-          <div style="display:flex;flex-direction:column;gap:6px;padding:20px 22px;border-radius:16px;background:#0D1117;border:1px solid rgba(255,255,255,.08);text-align:left;width:266px;"><div style="display:flex;align-items:center;gap:10px;"><span style="width:7px;height:7px;border-radius:50%;background:#13BC64;box-shadow:0 0 8px rgba(19,188,100,.6);flex:none;"></span><span style="font:700 16px/22px 'Manrope';color:#F7F5ED;">Findings document</span></div><div style="font:400 14px/20px 'Manrope';color:#9CA3AF;">The problem, prioritized.</div></div>
-          <div style="display:flex;flex-direction:column;gap:6px;padding:20px 22px;border-radius:16px;background:#0D1117;border:1px solid rgba(255,255,255,.08);text-align:left;width:266px;"><div style="display:flex;align-items:center;gap:10px;"><span style="width:7px;height:7px;border-radius:50%;background:#13BC64;box-shadow:0 0 8px rgba(19,188,100,.6);flex:none;"></span><span style="font:700 16px/22px 'Manrope';color:#F7F5ED;">Proposals</span></div><div style="font:400 14px/20px 'Manrope';color:#9CA3AF;">The paths, evaluated together.</div></div>
-          <div style="display:flex;flex-direction:column;gap:6px;padding:20px 22px;border-radius:16px;background:#0D1117;border:1px solid rgba(255,255,255,.08);text-align:left;width:266px;"><div style="display:flex;align-items:center;gap:10px;"><span style="width:7px;height:7px;border-radius:50%;background:#13BC64;box-shadow:0 0 8px rgba(19,188,100,.6);flex:none;"></span><span style="font:700 16px/22px 'Manrope';color:#F7F5ED;">Action plan</span></div><div style="font:400 14px/20px 'Manrope';color:#9CA3AF;">The execution, ready to start.</div></div>
+      <div class="mg-center">
+        <div class="mg-eyebrow center" style="animation:mgSceneIn .8s .05s both;">Start with a discovery</div>
+        <div class="mg-display" style="margin-top:20px;animation:mgSceneIn .85s .18s both;">Let’s map your <span style="color:var(--accent);">problem</span>.</div>
+        <div class="mg-body-lg" style="margin-top:22px;max-width:780px;animation:mgSceneIn .85s .3s both;">We listen to the problem, play it back, and propose the way in: a Discovery.</div>
+        <div class="mg-caption" style="margin-top:40px;animation:mgSceneIn .85s .36s both;">The first three steps of the Magoya Method — each closing with an agreed deliverable</div>
+        <div class="mg-row" style="max-width:900px;margin-top:20px;animation:mgSceneIn .85s .4s both;">
+          <div class="mg-card-dark" style="text-align:left;">
+            <div style="display:flex;align-items:center;gap:10px;"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(0,222,104,.6);flex:none;"></span><span class="mg-h4">Findings document</span></div>
+            <div class="mg-small" style="margin-top:8px;">The problem, prioritized.</div>
+          </div>
+          <div class="mg-card-dark" style="text-align:left;">
+            <div style="display:flex;align-items:center;gap:10px;"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(0,222,104,.6);flex:none;"></span><span class="mg-h4">Proposals</span></div>
+            <div class="mg-small" style="margin-top:8px;">The paths, evaluated together.</div>
+          </div>
+          <div class="mg-card-dark" style="text-align:left;">
+            <div style="display:flex;align-items:center;gap:10px;"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(0,222,104,.6);flex:none;"></span><span class="mg-h4">Action plan</span></div>
+            <div class="mg-small" style="margin-top:8px;">The execution, ready to start.</div>
+          </div>
         </div>
-        <div style="font:500 15px/22px 'JetBrains Mono',monospace;letter-spacing:.04em;color:#6B7280;margin-top:26px;animation:mgSceneIn .85s .55s both;">Typically 1–2 months · Fixed deliverables · No fixed-price traps</div>
-        <div style="font:400 19px/29px 'Manrope';color:#9CA3AF;margin-top:40px;max-width:880px;animation:mgSceneIn .85s .7s both;">Every agricultural organization has different constraints, systems, users, and goals. That’s why we don’t sell software — <span style="color:#F7F5ED;font-weight:600;">we solve problems</span>.</div>
-        <a href="https://magoya.com/discovery" target="_blank" rel="noopener" style="margin-top:44px;display:inline-flex;align-items:center;gap:10px;padding:0 32px;height:56px;border-radius:8px;background:#13BC64;color:#0A0E14;font:700 17px/1 'Manrope';text-decoration:none;box-shadow:0 8px 32px rgba(19,188,100,0.22);transition:background .15s;animation:mgSceneIn .85s .85s both;">Book a Discovery Call<span style="font-size:18px;transform:translateY(-1px);">→</span></a>
-        <div style="font:500 14px/20px 'JetBrains Mono',monospace;letter-spacing:.06em;color:#4B5563;margin-top:30px;animation:mgFade 1s 1.1s both;">magoya.com/discovery</div>
+        <div class="mg-caption" style="margin-top:26px;letter-spacing:.06em;text-transform:none;animation:mgSceneIn .85s .55s both;">Typically 1–2 months · Fixed deliverables · No fixed-price traps</div>
+        <div class="mg-body-lg" style="margin-top:40px;max-width:880px;animation:mgSceneIn .85s .7s both;">Every agricultural organization has different constraints, systems, users, and goals. That’s why we don’t sell software — <span style="color:var(--on-ink);font-weight:600;">we solve problems</span>.</div>
+        <a href="https://magoya.com/discovery" target="_blank" rel="noopener" class="mg-btn-primary" style="margin-top:44px;animation:mgSceneIn .85s .85s both;">Book a Discovery Call<span class="mg-arrow">→</span></a>
+        <div class="mg-caption" style="margin-top:30px;letter-spacing:.06em;text-transform:none;animation:mgFade 1s 1.1s both;">magoya.com/discovery</div>
       </div>
     </section>
     <!-- ============ EXPLORATION PANEL ============ -->
     <div id="panelOverlay">
-      <button id="btnClosePanel" class="mg-round-btn" style="position:absolute;right:48px;top:40px;z-index:3;width:46px;height:46px;border-radius:9999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:#C9D1D9;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;">×</button>
+      <button id="btnClosePanel" class="mg-round-btn mg-panel-close">×</button>
 
-      <div style="position:absolute;left:96px;top:88px;right:96px;">
-        <div id="panelEyebrow" style="font:600 12px/16px 'JetBrains Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#2ED47E;"></div>
-        <div id="panelTitle" style="font:800 40px/48px 'Manrope';letter-spacing:-.018em;color:#F7F5ED;margin-top:16px;max-width:1100px;"></div>
-        <div id="panelSupporting" style="font:400 18px/27px 'Manrope';color:#9CA3AF;margin-top:16px;max-width:880px;"></div>
-      </div>
+      <div class="mg-panel-inner">
+        <div class="mg-panel-header">
+          <div id="panelEyebrow" class="mg-eyebrow"></div>
+          <div id="panelTitle" class="mg-h2"></div>
+          <div id="panelSupporting" class="mg-body"></div>
+        </div>
 
-      <div style="position:absolute;left:96px;top:286px;width:680px;bottom:80px;">
-        <div id="panelChips" style="display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start;"></div>
-      </div>
-
-      <div style="position:absolute;right:96px;top:286px;width:880px;bottom:80px;">
-        <div id="panelDetail" style="background:#0D1117;border:1px solid rgba(19,188,100,.22);border-radius:24px;padding:40px;box-shadow:0 8px 32px rgba(19,188,100,0.10);"></div>
+        <div class="mg-panel-body">
+          <div id="panelChips"></div>
+          <div id="panelDetail" class="mg-card"></div>
+        </div>
       </div>
     </div>
 
     <!-- ============ NAV CHROME ============ -->
-    <div id="navHint" style="position:absolute;bottom:40px;left:0;right:0;display:flex;justify-content:center;pointer-events:none;z-index:6;">
-      <div style="display:flex;align-items:center;gap:10px;animation:mgHint 2.6s ease-in-out infinite;">
-        <span style="font:500 12px/16px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">Scroll</span>
-        <span style="color:#2ED47E;font-size:14px;">↓</span>
+    <div id="navHint">
+      <div class="mg-hint">
+        <span>Scroll</span>
+        <span class="arr">↓</span>
       </div>
     </div>
 
-    <div id="navDots" style="position:absolute;right:46px;top:50%;transform:translateY(-50%);z-index:7;display:flex;flex-direction:column;gap:18px;align-items:flex-end;"></div>
+    <div id="navDots"></div>
 
-    <div style="position:absolute;right:46px;bottom:38px;z-index:7;display:flex;gap:12px;">
-      <button id="btnPrev" class="mg-round-btn" style="width:44px;height:44px;border-radius:9999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:#C9D1D9;font-size:17px;cursor:pointer;">‹</button>
-      <button id="btnNext" class="mg-round-btn" style="width:44px;height:44px;border-radius:9999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:#C9D1D9;font-size:17px;cursor:pointer;">›</button>
+    <div class="mg-nav-arrows">
+      <button id="btnPrev" class="mg-round-btn">‹</button>
+      <button id="btnNext" class="mg-round-btn">›</button>
     </div>
 
   </div>

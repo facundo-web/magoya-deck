@@ -43,13 +43,9 @@
   let edges = [];
   const clusterC = [{ x: 1250, y: 300 }, { x: 1560, y: 560 }, { x: 1300, y: 830 }];
 
-  function fit() {
-    const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
-    stage.style.transform = `translate(-50%,-50%) scale(${s})`;
-  }
-
   function updateLabel() {
     stage.setAttribute('data-screen-label', SCENE_NAMES[scene] || '');
+    stage.setAttribute('data-screen-index', String(scene + 1).padStart(2, '0'));
   }
 
   function initNetwork() {
@@ -99,10 +95,11 @@
     edges.forEach(([a, b]) => {
       const na = nodes[a], nb = nodes[b];
       if (introP < na.reveal || introP < nb.reveal) return;
-      let op = 0.16 * baseA;
-      if (mode === 'clusters') { op = na.cluster === nb.cluster ? 0.24 : 0.05; if (hl >= 0) op *= (na.cluster === hl || nb.cluster === hl) ? 1.7 : 0.35; op *= baseA; }
-      else if (mode === 'ring') op = 0.09 * baseA;
-      ctx.strokeStyle = `rgba(19,188,100,${op})`;
+      let op = 0.14 * baseA;
+      if (mode === 'clusters') { op = na.cluster === nb.cluster ? 0.20 : 0.04; if (hl >= 0) op *= (na.cluster === hl || nb.cluster === hl) ? 1.7 : 0.35; op *= baseA; }
+      else if (mode === 'ring') op = 0.08 * baseA;
+      const edgeCol = (mode === 'clusters' && hl >= 0 && (na.cluster === hl || nb.cluster === hl)) ? '0,222,104' : '244,239,232';
+      ctx.strokeStyle = `rgba(${edgeCol},${op})`;
       ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(na.cx, na.cy); ctx.lineTo(nb.cx, nb.cy); ctx.stroke();
     });
@@ -111,8 +108,8 @@
       if (introP < n.reveal) return;
       const appear = Math.max(0, Math.min(1, (introP - n.reveal) / 0.035));
       let a = baseA * appear * (0.72 + 0.28 * Math.sin(n.tw));
-      let rad = n.r, col = '19,188,100';
-      if (mode === 'clusters' && hl >= 0) { if (n.cluster === hl) { rad *= 1.45; col = '46,212,126'; } else a *= 0.4; }
+      let rad = n.r, col = '244,239,232';
+      if (mode === 'clusters' && hl >= 0) { if (n.cluster === hl) { rad *= 1.45; col = '0,222,104'; } else a *= 0.4; }
       ctx.beginPath(); ctx.arc(n.cx, n.cy, rad, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${col},${a})`; ctx.fill();
       if ((mode === 'clusters' && n.cluster === hl) || (mode === 'spread' && i % 9 === 0)) {
@@ -136,19 +133,21 @@
   }
 
   function render() {
+    let activeIsPaper = false;
     document.querySelectorAll('.scene').forEach(el => {
-      el.classList.toggle('active', Number(el.dataset.scene) === scene && !panelKey);
+      const isActive = Number(el.dataset.scene) === scene && !panelKey;
+      el.classList.toggle('active', isActive);
+      if (isActive && el.classList.contains('paper-scene')) activeIsPaper = true;
     });
+    document.body.classList.toggle('paper-active', activeIsPaper);
+    cornerMark.src = activeIsPaper ? 'assets/logos/magoya-wordmark-green.svg' : 'assets/logos/magoya-wordmark-white.svg';
     cornerMark.classList.toggle('show', scene >= 3 && !panelKey);
     navHint.style.display = (scene !== 7 && scene < 13 && !panelKey) ? '' : 'none';
     panelOverlay.classList.toggle('show', !!panelKey);
 
     const groupIdx = scene <= 2 ? 0 : scene <= 6 ? 1 : scene <= 8 ? 2 : scene <= 10 ? 3 : scene === 11 ? 4 : scene === 12 ? 5 : 6;
     navDotsEl.querySelectorAll('.nav-dot-row').forEach((row, i) => {
-      row.querySelector('.nav-dot-label').style.color = i === groupIdx ? '#2ED47E' : '#4B5563';
-      const dot = row.querySelector('.nav-dot-dot');
-      if (i === groupIdx) { dot.style.background = '#13BC64'; dot.style.borderColor = 'transparent'; dot.style.boxShadow = '0 0 8px rgba(19,188,100,.7)'; }
-      else { dot.style.background = 'transparent'; dot.style.borderColor = '#374151'; dot.style.boxShadow = 'none'; }
+      row.classList.toggle('is-active', i === groupIdx);
     });
 
     if (panelKey) renderPanel();
@@ -166,21 +165,19 @@
     panelSupporting.textContent = cfg.supporting;
 
     panelChips.innerHTML = items.map((it, i) => {
-      const activeStyle = "padding:10px 15px;border-radius:8px;border:1px solid rgba(19,188,100,.55);background:rgba(19,188,100,.13);color:#E7FAF0;font:600 14px/1 'Manrope';cursor:pointer;";
-      const idleStyle = "padding:10px 15px;border-radius:8px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.02);color:#9CA3AF;font:500 14px/1 'Manrope';cursor:pointer;";
-      return `<button class="mg-chip" data-sel="${i}" style="${i === sel ? activeStyle : idleStyle}">${it.name}</button>`;
+      return `<button class="mg-chip mg-chip-idx${i === sel ? ' is-active' : ''}" data-sel="${i}"><span class="mg-num">${String(i + 1).padStart(2, '0')}</span><span>${it.name}</span></button>`;
     }).join('');
 
     const bulletsHtml = (selItem.bullets && selItem.bullets.length) ? `
-      <div style="font:600 11px/14px 'JetBrains Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:#6B7280;margin-top:34px;">${cfg.bulletsLabel}</div>
-      <div style="display:flex;flex-direction:column;gap:14px;margin-top:18px;">
-        ${selItem.bullets.map(b => `<div style="display:flex;align-items:center;gap:14px;"><span style="width:7px;height:7px;border-radius:50%;background:#13BC64;box-shadow:0 0 8px rgba(19,188,100,.6);flex:none;"></span><span style="font:500 18px/24px 'Manrope';color:#C9D1D9;">${b}</span></div>`).join('')}
+      <div class="mg-caption mg-panel-detail-group" style="margin-top:28px;">${cfg.bulletsLabel}</div>
+      <div class="mg-panel-detail-bullets">
+        ${selItem.bullets.map(b => `<div class="mg-panel-detail-bullet"><span class="dot"></span><span>${b}</span></div>`).join('')}
       </div>` : '';
 
     panelDetail.innerHTML = `
-      ${selItem.group ? `<div style="font:600 11px/14px 'JetBrains Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:#6B7280;margin-bottom:14px;">${selItem.group}</div>` : ''}
-      <div style="font:800 34px/40px 'Manrope';letter-spacing:-.01em;color:#F7F5ED;">${selItem.name || ''}</div>
-      <div style="font:400 20px/30px 'Manrope';color:#8FE6B2;margin-top:14px;">${selItem.def || ''}</div>
+      ${selItem.group ? `<div class="mg-caption mg-panel-detail-group">${selItem.group}</div>` : ''}
+      <div class="mg-panel-detail-name">${selItem.name || ''}</div>
+      <div class="mg-panel-detail-def">${selItem.def || ''}</div>
       ${bulletsHtml}`;
 
     panelChips.querySelectorAll('.mg-chip').forEach(btn => {
@@ -226,9 +223,9 @@
   });
 
   navDotsEl.innerHTML = NAV_GROUPS.map((g, i) => `
-    <div class="nav-dot-row" data-jump="${i}" style="display:flex;align-items:center;gap:10px;cursor:pointer;">
-      <span class="nav-dot-label" style="font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;">${g}</span>
-      <span class="nav-dot-dot" style="width:9px;height:9px;border-radius:50%;border:1px solid #374151;"></span>
+    <div class="nav-dot-row" data-jump="${i}">
+      <span class="nav-dot-label">${g}</span>
+      <span class="nav-dot-dot"></span>
     </div>`).join('');
   navDotsEl.querySelectorAll('.nav-dot-row').forEach((row, i) => {
     row.addEventListener('click', () => setScene(GROUP_START[i]));
@@ -242,11 +239,9 @@
     document.getElementById('count59').textContent = '64';
     document.getElementById('cornerMark').classList.add('show');
   } else {
-    window.addEventListener('resize', fit);
     window.addEventListener('keydown', onKey);
     window.addEventListener('wheel', onWheel, { passive: false });
 
-    fit();
     initNetwork();
     t0 = performance.now();
     loop();
