@@ -10,13 +10,16 @@ which css/deck.css's @media print rule turns into one page per scene).
 
 Requires a local Chrome/Chromium. Regenerate after any content change:
     python3 build_pdf.py
+    python3 build_pdf.py --client-name "John Deere" --client-logo assets/logos/clients/john-deere.svg
 """
+import argparse
 import http.server
 import threading
 import subprocess
 import shutil
 import sys
 import os
+import urllib.parse
 
 PORT = 8935
 OUT = "Magoya_Knowledge_Experience.pdf"
@@ -36,6 +39,11 @@ def find_chrome():
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--client-name", default=None, help='e.g. "John Deere" — adds a "Prepared for" line to the PDF cover')
+    parser.add_argument("--client-logo", default=None, help="path relative to this folder, e.g. assets/logos/clients/john-deere.svg — optional even with --client-name")
+    args = parser.parse_args()
+
     root = os.path.dirname(os.path.abspath(__file__))
     os.chdir(root)
 
@@ -45,7 +53,12 @@ def main():
     thread.start()
 
     chrome = find_chrome()
-    url = f"http://127.0.0.1:{PORT}/index.html?print=1"
+    query = "print=1"
+    if args.client_name:
+        query += f"&client={urllib.parse.quote(args.client_name)}"
+        if args.client_logo:
+            query += f"&logo={urllib.parse.quote(args.client_logo)}"
+    url = f"http://127.0.0.1:{PORT}/index.html?{query}"
     print(f"Rendering {url} -> {OUT} using {chrome}")
 
     subprocess.run([

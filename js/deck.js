@@ -24,6 +24,12 @@
   const panelSupporting = document.getElementById('panelSupporting');
   const panelChips = document.getElementById('panelChips');
   const panelDetail = document.getElementById('panelDetail');
+  const flashOverlay = document.getElementById('flashOverlay');
+
+  function sceneIsPaper(n) {
+    const el = document.querySelector(`.scene[data-scene="${n}"]`);
+    return !!(el && el.classList.contains('paper-scene'));
+  }
 
   let scene = 0;
   try {
@@ -36,87 +42,70 @@
   let sel = 0;
   let countRAF = null;
   let lastNav = 0;
-  let t0 = 0;
   let raf = null;
-  let introP = 0;
   let nodes = [];
-  let edges = [];
-  const clusterC = [{ x: 1250, y: 300 }, { x: 1560, y: 560 }, { x: 1300, y: 830 }];
+  const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const FRAME_MS = 1000 / 30;
+  let lastFrameT = 0;
 
   function updateLabel() {
     stage.setAttribute('data-screen-label', SCENE_NAMES[scene] || '');
     stage.setAttribute('data-screen-index', String(scene + 1).padStart(2, '0'));
   }
 
+  // Ambient background — direction "2c Red reducida": a quiet, almost-still
+  // texture behind the few remaining ink scenes, not a "network visualizing
+  // itself." Deliberately simple: 18 nodes drift and bounce off the edges,
+  // connecting only when close. No scene-aware modes — the canvas only ever
+  // shows behind scenes 2/8/13 now, so it doesn't need to perform per-scene.
   function initNetwork() {
-    const W = 1920, H = 1080, N = 84;
+    const W = 1920, H = 1080, N = 18;
     nodes = [];
     for (let i = 0; i < N; i++) {
-      const sx = 110 + Math.random() * (W - 220);
-      const sy = 110 + Math.random() * (H - 220);
-      nodes.push({ sx, sy, cx: sx, cy: sy, cluster: i % 3, r: 1.6 + Math.random() * 1.7, tw: Math.random() * Math.PI * 2, reveal: 0 });
+      nodes.push({
+        x: 60 + Math.random() * (W - 120),
+        y: 60 + Math.random() * (H - 120),
+        vx: (Math.random() * 2 - 1) * 0.08,
+        vy: (Math.random() * 2 - 1) * 0.08,
+        r: 1.4 + Math.random() * 1.4,
+      });
     }
-    const order = [...Array(N).keys()];
-    for (let i = N - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = order[i]; order[i] = order[j]; order[j] = t; }
-    order.forEach((idx, rank) => {
-      let r;
-      if (rank === 0) r = 0; else if (rank === 1) r = 0.10; else if (rank === 2) r = 0.20;
-      else r = 0.30 + Math.pow((rank - 2) / (N - 3), 0.85) * 0.70;
-      nodes[idx].reveal = r;
-    });
-    edges = [];
-    const seen = new Set();
-    nodes.forEach((n, i) => {
-      const d = nodes.map((m, j) => ({ j, dist: (m.sx - n.sx) ** 2 + (m.sy - n.sy) ** 2 })).filter(o => o.j !== i).sort((a, b) => a.dist - b.dist).slice(0, 2);
-      d.forEach(o => { const k = i < o.j ? i + '-' + o.j : o.j + '-' + i; if (!seen.has(k)) { seen.add(k); edges.push([i, o.j]); } });
+  }
+
+  function drawNetwork() {
+    const W = 1920, H = 1080;
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < 92) {
+          ctx.strokeStyle = `rgba(0,222,104,${(1 - d / 92) * 0.55})`;
+          ctx.lineWidth = 0.8;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+    }
+    nodes.forEach(n => {
+      ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0,222,104,0.22)';
+      ctx.fill();
     });
   }
 
-  function loop() {
+  function loop(now) {
     raf = requestAnimationFrame(loop);
-    const now = performance.now();
-    introP = Math.min(1, (now - t0) / 6800);
+    if (now - lastFrameT < FRAME_MS) return;
+    lastFrameT = now;
     const W = 1920, H = 1080;
-    ctx.clearRect(0, 0, W, H);
-    const mode = scene <= 2 ? 'spread' : scene <= 6 ? 'clusters' : scene === 7 ? 'ring' : scene === 8 ? 'spread' : scene <= 10 ? 'ring' : scene <= 12 ? 'clusters' : 'spread';
-    const hl = (scene >= 4 && scene <= 6) ? scene - 4 : -1;
-    let baseA = mode === 'spread' ? 1 : mode === 'clusters' ? 0.7 : 0.42;
-    if (scene >= 9) baseA *= 0.5;
-    const cx = 960, cy = 540;
-
-    nodes.forEach((n, i) => {
-      let tx, ty;
-      if (mode === 'spread') { tx = n.sx; ty = n.sy; }
-      else if (mode === 'clusters') { const c = clusterC[n.cluster]; tx = c.x + (n.sx - cx) * 0.16; ty = c.y + (n.sy - cy) * 0.16; }
-      else { const ang = (i / nodes.length) * Math.PI * 2; const R = 350 + (i % 3) * 26; tx = cx + Math.cos(ang) * R; ty = cy + Math.sin(ang) * R * 0.62; }
-      n.cx += (tx - n.cx) * 0.055; n.cy += (ty - n.cy) * 0.055; n.tw += 0.018;
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x <= 0 || n.x >= W) n.vx *= -1;
+      if (n.y <= 0 || n.y >= H) n.vy *= -1;
+      n.x = Math.max(0, Math.min(W, n.x));
+      n.y = Math.max(0, Math.min(H, n.y));
     });
-
-    edges.forEach(([a, b]) => {
-      const na = nodes[a], nb = nodes[b];
-      if (introP < na.reveal || introP < nb.reveal) return;
-      let op = 0.14 * baseA;
-      if (mode === 'clusters') { op = na.cluster === nb.cluster ? 0.20 : 0.04; if (hl >= 0) op *= (na.cluster === hl || nb.cluster === hl) ? 1.7 : 0.35; op *= baseA; }
-      else if (mode === 'ring') op = 0.08 * baseA;
-      const edgeCol = (mode === 'clusters' && hl >= 0 && (na.cluster === hl || nb.cluster === hl)) ? '0,222,104' : '244,239,232';
-      ctx.strokeStyle = `rgba(${edgeCol},${op})`;
-      ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(na.cx, na.cy); ctx.lineTo(nb.cx, nb.cy); ctx.stroke();
-    });
-
-    nodes.forEach((n, i) => {
-      if (introP < n.reveal) return;
-      const appear = Math.max(0, Math.min(1, (introP - n.reveal) / 0.035));
-      let a = baseA * appear * (0.72 + 0.28 * Math.sin(n.tw));
-      let rad = n.r, col = '244,239,232';
-      if (mode === 'clusters' && hl >= 0) { if (n.cluster === hl) { rad *= 1.45; col = '0,222,104'; } else a *= 0.4; }
-      ctx.beginPath(); ctx.arc(n.cx, n.cy, rad, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${col},${a})`; ctx.fill();
-      if ((mode === 'clusters' && n.cluster === hl) || (mode === 'spread' && i % 9 === 0)) {
-        ctx.beginPath(); ctx.arc(n.cx, n.cy, rad * 2.6, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${col},${a * 0.12})`; ctx.fill();
-      }
-    });
+    drawNetwork();
   }
 
   function startCount() {
@@ -188,9 +177,15 @@
   function setScene(n) {
     n = Math.max(0, Math.min(TOTAL_SCENES - 1, n));
     if (n === 7 && scene !== 7) { startCount(); } else if (n !== 7) { count59 = 0; }
+    const wasPaper = sceneIsPaper(scene);
     scene = n;
     panelKey = null;
     try { localStorage.setItem('magoya_kx_scene', String(n)); } catch (e) {}
+    if (!REDUCED_MOTION && sceneIsPaper(n) !== wasPaper) {
+      flashOverlay.classList.remove('flash');
+      void flashOverlay.offsetWidth; // restart the animation if it's already mid-flash
+      flashOverlay.classList.add('flash');
+    }
     render();
   }
 
@@ -235,16 +230,36 @@
     // Print/PDF mode: every scene is its own page, all shown at once,
     // no animation loop, no interaction — see css/deck.css @media print.
     document.body.classList.add('print-all');
-    document.querySelectorAll('.scene').forEach(el => el.classList.add('active'));
+    document.querySelectorAll('.scene').forEach(el => {
+      el.classList.add('active');
+      const footer = document.createElement('div');
+      footer.className = 'print-footer';
+      footer.innerHTML = `<span>Magoya · Knowledge Experience</span><span>${el.dataset.page} / 14</span>`;
+      el.appendChild(footer);
+    });
     document.getElementById('count59').textContent = '64';
     document.getElementById('cornerMark').classList.add('show');
+
+    // Cover personalization — direction "12b": ?client=<name>&logo=<path
+    // relative to the deck root, e.g. assets/logos/clients/john-deere.svg>.
+    // Omitted entirely (not an empty rectangle) when no client is passed.
+    const params = new URLSearchParams(location.search);
+    const clientName = params.get('client');
+    const clientLogo = params.get('logo');
+    if (clientName) {
+      document.getElementById('printCoverClientName').textContent = clientName;
+      const logoImg = document.getElementById('printCoverLogo');
+      if (clientLogo) { logoImg.src = clientLogo; logoImg.style.display = ''; }
+      else { logoImg.style.display = 'none'; }
+      document.getElementById('printCoverClientRow').style.display = '';
+    }
   } else {
     window.addEventListener('keydown', onKey);
     window.addEventListener('wheel', onWheel, { passive: false });
 
     initNetwork();
-    t0 = performance.now();
-    loop();
+    drawNetwork();
+    if (!REDUCED_MOTION) raf = requestAnimationFrame(loop);
     render();
   }
 })();
