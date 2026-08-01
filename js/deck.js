@@ -31,6 +31,19 @@
     return !!(el && el.classList.contains('paper-scene'));
   }
 
+  // Directional choreography — scoped to exactly these four boundaries per
+  // the brief (1↔2 Manifesto→Logo, 6↔7 Pillar 3→Proof, 7↔8 Proof→Finale,
+  // 9↔10 Bridge→Method). Every other scene change keeps today's instant
+  // cut + flashOverlay, byte-for-byte. Keyed by the unordered scene pair so
+  // it fires the same way regardless of nav direction.
+  const VT_PAIRS = {
+    '1-2': null,
+    '6-7': { oldSel: '[data-scene="6"] .mg-pillar-head', newSel: '[data-scene="7"] .mg-hub-head' },
+    '7-8': { oldSel: '[data-scene="7"] .mg-hub-center', newSel: '[data-scene="8"] .mg-finale-stats' },
+    '9-10': { oldSel: '[data-scene="9"] .mg-h1', newSel: '[data-scene="10"] .mg-method-head' },
+  };
+  const supportsVT = typeof document.startViewTransition === 'function';
+
   let scene = 0;
   try {
     const s = parseInt(localStorage.getItem('magoya_kx_scene'));
@@ -174,19 +187,68 @@
     });
   }
 
-  function setScene(n) {
-    n = Math.max(0, Math.min(TOTAL_SCENES - 1, n));
+  function applySceneChange(n) {
     if (n === 7 && scene !== 7) { startCount(); } else if (n !== 7) { count59 = 0; }
-    const wasPaper = sceneIsPaper(scene);
     scene = n;
     panelKey = null;
     try { localStorage.setItem('magoya_kx_scene', String(n)); } catch (e) {}
-    if (!REDUCED_MOTION && sceneIsPaper(n) !== wasPaper) {
-      flashOverlay.classList.remove('flash');
-      void flashOverlay.offsetWidth; // restart the animation if it's already mid-flash
-      flashOverlay.classList.add('flash');
-    }
     render();
+  }
+
+  function setScene(n) {
+    n = Math.max(0, Math.min(TOTAL_SCENES - 1, n));
+    const prev = scene;
+    if (n === prev) { render(); return; }
+
+    const pairKey = [prev, n].sort((a, b) => a - b).join('-');
+    const isTargetPair = Object.prototype.hasOwnProperty.call(VT_PAIRS, pairKey);
+    const wasPaper = sceneIsPaper(prev);
+
+    if (!REDUCED_MOTION && supportsVT && !PRINT_MODE && isTargetPair) {
+      const direction = n > prev ? 'fwd' : 'back';
+      const html = document.documentElement;
+      const oldSceneEl = document.querySelector(`.scene[data-scene="${prev}"]`);
+      const anchor = VT_PAIRS[pairKey];
+      let oldAnchorEl = null, newAnchorEl = null;
+
+      html.dataset.navDir = direction;
+      if (oldSceneEl) oldSceneEl.style.viewTransitionName = 'mg-content-old';
+      if (anchor) {
+        oldAnchorEl = document.querySelector(anchor.oldSel);
+        if (oldAnchorEl) oldAnchorEl.style.viewTransitionName = 'mg-anchor';
+      }
+
+      const transition = document.startViewTransition(() => {
+        if (oldSceneEl) oldSceneEl.style.viewTransitionName = '';
+        if (oldAnchorEl) oldAnchorEl.style.viewTransitionName = '';
+        document.body.classList.add('vt-grid-boost');
+        applySceneChange(n);
+        const newSceneEl = document.querySelector(`.scene[data-scene="${n}"]`);
+        if (newSceneEl) newSceneEl.style.viewTransitionName = 'mg-content-new';
+        if (anchor) {
+          newAnchorEl = document.querySelector(anchor.newSel);
+          if (newAnchorEl) newAnchorEl.style.viewTransitionName = 'mg-anchor';
+        }
+        // grid recolor: flip the tint mid-mutation so the "old" capture is
+        // pre-cut and the "new" capture is post-cut — the browser cross-
+        // fades/morphs between the two automatically (persistent named node).
+      });
+
+      transition.finished.finally(() => {
+        const settledSceneEl = document.querySelector(`.scene[data-scene="${n}"]`);
+        if (settledSceneEl) settledSceneEl.style.viewTransitionName = '';
+        if (newAnchorEl) newAnchorEl.style.viewTransitionName = '';
+        delete html.dataset.navDir;
+        document.body.classList.remove('vt-grid-boost');
+      });
+    } else {
+      applySceneChange(n);
+      if (!REDUCED_MOTION && sceneIsPaper(n) !== wasPaper) {
+        flashOverlay.classList.remove('flash');
+        void flashOverlay.offsetWidth; // restart the animation if it's already mid-flash
+        flashOverlay.classList.add('flash');
+      }
+    }
   }
 
   function openPanel(key) { panelKey = key; sel = 0; render(); }

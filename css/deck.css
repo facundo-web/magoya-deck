@@ -93,10 +93,23 @@ html,body{margin:0;padding:0;background:var(--ink);overflow:hidden;font-family:v
 .bg-glow{position:absolute;inset:0;pointer-events:none;background:
   radial-gradient(ellipse 1400px 760px at 50% -10%, rgba(0,222,104,0.08), transparent 60%),
   linear-gradient(180deg, rgba(15,46,30,.10), rgba(10,26,17,.55));}
-.bg-grid{position:absolute;inset:0;pointer-events:none;opacity:.05;background-image:
-  linear-gradient(var(--paper) 1px,transparent 1px),
-  linear-gradient(90deg,var(--paper) 1px,transparent 1px);
-  background-size:64px 64px;}
+.bg-grid{position:absolute;inset:0;pointer-events:none;opacity:.05;--grid-tint:var(--paper);background-image:
+  linear-gradient(var(--grid-tint) 1px,transparent 1px),
+  linear-gradient(90deg,var(--grid-tint) 1px,transparent 1px);
+  background-size:64px 64px;
+  view-transition-name:mg-grid;}
+/* "the lines stay and change color" — the grid already persists across every
+   cut today (one unchanging DOM node); this just lets it recolor DURING the
+   four instrumented transitions (js/deck.js toggles body.vt-grid-boost for
+   the transition's duration only). --grid-tint stays var(--paper) at every
+   resting state, on every scene, exactly like today — the shift to
+   accent-deep only exists transiently while cutting into/out of an ink
+   scene, then reverts once the transition settles. No scene's permanent
+   look changes; only the cut itself gets a recolor beat. Reuses existing
+   palette tokens only. */
+body.vt-grid-boost:not(.paper-active) .bg-grid{ --grid-tint:var(--accent-deep); }
+body.vt-grid-boost .bg-grid{opacity:.09;transition:opacity .56s ease;}
+@media (prefers-reduced-motion: reduce){ .bg-grid{view-transition-name:none;} }
 
 /* paper-grain texture, subtle, hand-made not glossy */
 .bg-grain{position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:.5;
@@ -370,6 +383,14 @@ html,body{margin:0;padding:0;background:var(--ink);overflow:hidden;font-family:v
    left, for nodes that would otherwise crowd their own incoming lines. */
 .mg-pnode{position:absolute;transform:translateY(-50%);display:inline-flex;align-items:center;gap:7px;white-space:nowrap;}
 .mg-pnode.is-left{flex-direction:row-reverse;}
+/* Vertical siblings of .is-left, for nodes sitting on the top/bottom of a
+   closed-loop track (pillar 3): label grows away from the track instead of
+   sideways. Anchor is still the dot, not the box — translate(-50%,-100%)
+   pins the box's bottom edge (≈ the dot, first in DOM + reversed order) to
+   the node's `top`, so it grows upward; .is-below just anchors the box's
+   own top edge to `top` and grows down. */
+.mg-pnode.is-above{flex-direction:column-reverse;transform:translate(-50%,-100%);white-space:normal;text-align:center;}
+.mg-pnode.is-below{flex-direction:column;transform:translate(-50%,0);white-space:normal;text-align:center;}
 .mg-pnode-dot{width:10px;height:10px;border-radius:50%;border:1.4px solid var(--ink);background:var(--paper-dim);flex:none;}
 .mg-pnode-label{font:600 clamp(.7rem,.64rem+.25vw,.85rem)/1 var(--sans);color:var(--scene-fg);background:var(--paper-dim);padding:1px 3px;}
 .mg-pnode.is-hub .mg-pnode-dot{background:var(--accent-deep);border-color:var(--accent-deep);box-shadow:0 0 9px rgba(14,107,54,.4);}
@@ -380,11 +401,80 @@ html,body{margin:0;padding:0;background:var(--ink);overflow:hidden;font-family:v
 /* pillar 1 — domain cluster */
 .mg-pdiagram--cluster{aspect-ratio:640/240;max-width:640px;}
 
-/* pillar 2 — inputs converge on one fit (fully abstract, no text) */
-.mg-pdiagram--converge{aspect-ratio:640/200;max-width:460px;}
+/* pillar 2, concept "Reshape" — a generic template (dashed box) can't
+   contain the actual shape of the problem (ghost polygon overflowing the
+   box); the same shape gets its own outline drawn on its own terms
+   instead (solid fitted polygon, pulsing once it's arrived at). One
+   shape, two states — the box never was going to work. */
+.mg-pdiagram-template{fill:none;stroke:var(--scene-fg);stroke-width:1.6;stroke-dasharray:4 3;opacity:.5;}
+.mg-pdiagram-ghost{fill:none;stroke:var(--scene-fg);stroke-width:1.7;stroke-dasharray:2 4;opacity:.48;}
+.mg-pdiagram-fit{fill:none;stroke:var(--accent-deep);stroke-width:1.9;stroke-linejoin:round;}
+.mg-pdiagram--reshape{aspect-ratio:640/200;max-width:480px;}
 
-/* pillar 3 — sequential loop */
-.mg-pdiagram--loop{aspect-ratio:640/150;max-width:620px;}
+/* pillar 3 — sequential loop, round 3: "explicit cycle geometry".
+   Founder feedback: the old straight row + a dashed arc bolted underneath
+   with a tiny ↻ glyph didn't read as "this repeats" at a glance. Fix: the
+   four steps now sit on the corners of one continuous closed track (a
+   rounded rectangle, corners deliberately uneven — see index.html — so it
+   doesn't read as a generic corporate cycle template) — Deep Dive →
+   Ideation → Planning → Execution → back to Deep Dive is the same
+   unbroken dashed line, so the "it's a cycle, not a pipeline" idea is true
+   from a single static look, no animation or ↻ glyph required. Direction
+   is spelled out with four rotated chevrons around the track (replacing
+   the single ambiguous ↻ mark). Motion is a ONE-TIME traveling highlight
+   (mgLoopTravelPos/Fade below) that sweeps the closed path once on scene
+   entry, pinging each node as it arrives and pinging Deep Dive a second
+   time on return — then everything settles to the plain static track.
+   Base opacity:0 on the travel dot/pings (outside any keyframe) means
+   prefers-reduced-motion's global `animation:none` and print's
+   `@media print{*{animation:none}}` both already resolve to the correct
+   static end-state for free — no extra overrides needed there. */
+.mg-pdiagram--loop{aspect-ratio:640/240;max-width:560px;}
+.mg-pdiagram--loop .mg-pdiagram-connector{stroke-dasharray:1.2 6;}
+.mg-pdiagram--loop .mg-pdiagram-arrow{font-size:13px;}
+
+.mg-pdiagram-travel{fill:var(--scene-accent);opacity:0;}
+.mg-pdiagram-travel-ring{fill:none;stroke:var(--scene-accent);stroke-width:1.4;opacity:0;}
+.mg-pdiagram-ping{fill:none;stroke:var(--accent-deep);stroke-width:1.4;opacity:0;}
+
+@keyframes mgLoopTravelPos{
+  0%     {cx:320;cy:40;}
+  15.84% {cx:494;cy:40;}
+  18.42% {cx:519.46;cy:50.54;}
+  20.99% {cx:530;cy:76;}
+  25%    {cx:530;cy:120;}
+  29.01% {cx:530;cy:164;}
+  31.58% {cx:519.46;cy:189.46;}
+  34.16% {cx:494;cy:200;}
+  50%    {cx:320;cy:200;}
+  65.84% {cx:146;cy:200;}
+  68.42% {cx:120.54;cy:189.46;}
+  70.99% {cx:110;cy:164;}
+  75%    {cx:110;cy:120;}
+  79.01% {cx:110;cy:76;}
+  81.58% {cx:84.54;cy:50.54;}
+  84.16% {cx:146;cy:40;}
+  100%   {cx:320;cy:40;}
+}
+@keyframes mgLoopTravelFade{
+  0%  {opacity:0;}
+  4%  {opacity:1;}
+  96% {opacity:1;}
+  100%{opacity:0;}
+}
+@keyframes mgPingOnce{
+  0%  {opacity:.85;transform:scale(.55);}
+  100%{opacity:0;transform:scale(2);}
+}
+/* No JS hook needed to "arm" this: like every other entrance animation in
+   this deck (see mgSceneIn on the inline styles above), the whole scene is
+   display:none until it becomes active, and a display:none → block flip
+   restarts CSS animations on every descendant from 0% — so this plays once
+   per visit to scene 6 for free, no class toggling required. */
+.mg-pdiagram-travel,.mg-pdiagram-travel-ring{
+  animation:mgLoopTravelPos 3.2s linear 1.4s 1 both, mgLoopTravelFade 3.2s linear 1.4s 1 both;
+}
+.mg-pdiagram-ping{animation:mgPingOnce .7s ease-out 1 both;}
 
 @media screen and (max-width:760px){
   /* Same fallback strategy already used by the Proof hub: drop the
@@ -393,27 +483,53 @@ html,body{margin:0;padding:0;background:var(--ink);overflow:hidden;font-family:v
   .mg-pdiagram--loop .mg-pdiagram-svg{display:none;}
   .mg-pdiagram--cluster,.mg-pdiagram--loop{position:static;aspect-ratio:auto;height:auto;display:flex;flex-wrap:wrap;gap:11px 16px;}
   .mg-pdiagram--cluster .mg-pnode,.mg-pdiagram--loop .mg-pnode{position:static;transform:none;right:auto;flex-direction:row;}
-  .mg-pdiagram--loop{flex-direction:column;flex-wrap:nowrap;align-items:flex-start;gap:9px;}
-  .mg-pdiagram--loop .mg-pdiagram-arrow,.mg-pdiagram--loop .mg-pdiagram-loopmark{display:none;}
-  /* Sequence reads fine from stacking order alone; the loop-back is
-     already spelled out in the caption below, so no arrow glyph needed
-     here — keeps every node position:static with no left/right offsets
-     from the desktop layout able to leak back in. */
-  .mg-pdiagram--converge{max-width:min(420px,88vw);}
+  .mg-pdiagram--loop{flex-direction:column;flex-wrap:nowrap;align-items:flex-start;gap:9px;position:relative;padding-left:24px;}
+  .mg-pdiagram--loop .mg-pdiagram-arrow{display:none;}
+  /* The SVG track is gone at this width, so the "it closes" idea needs a
+     small stand-in: a dashed bracket running the height of the stacked
+     list with an arrowhead pointing back up at Deep Dive — a graphic, not
+     a word, so it doesn't touch the locked copy. The caption line below
+     the diagram spells the same idea out in text. */
+  .mg-pdiagram--loop::before{
+    content:"";position:absolute;left:4px;top:10px;bottom:10px;width:0;
+    border-left:1.6px dashed var(--accent-deep);
+  }
+  .mg-pdiagram--loop::after{
+    content:"";position:absolute;left:0;top:4px;width:0;height:0;
+    border:4px solid transparent;border-bottom-color:var(--accent-deep);
+  }
+  .mg-pdiagram--reshape{max-width:min(420px,88vw);}
 }
 
 /* ---- Proof hub ---- */
 .mg-hub{position:absolute;inset:0;}
 .mg-hub-head{position:absolute;top:clamp(40px,7vh,62px);left:0;right:0;text-align:center;padding:0 var(--edge-sm);}
 .mg-hub-svg{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;}
-.mg-hub-connector{fill:none;stroke:var(--accent-deep);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1 5;}
-.mg-hub-ring-svg{fill:none;stroke:var(--accent-deep);stroke-width:1.4;stroke-dasharray:3 6;animation:mgPulseRing 4s ease-in-out infinite;transform-origin:960px 520px;}
-.mg-hub-center-disc{fill:var(--ink);}
+.mg-hub-connector{fill:none;stroke:var(--accent-deep);stroke-width:2;stroke-linecap:round;stroke-dasharray:1 5;}
 .mg-hub-center{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);text-align:center;z-index:3;width:min(72vw,460px);}
-.mg-hub-center .mg-stat{color:var(--accent);}
-.mg-hub-node{position:absolute;transform:translate(-50%,-50%);z-index:4;width:clamp(150px,15vw,218px);padding:clamp(13px,1.4vw,18px) clamp(14px,1.6vw,20px);
-  border-radius:3px;background:none;border:1.4px solid var(--ink);text-align:center;}
-.mg-hub-node .mg-stat-md{font-size:clamp(1.5rem,1rem+2vw,2.5rem);color:var(--ink);}
+
+/* Focal treatment: one unmistakable centerpiece. A bold ink ring halos a
+   solid ink disc; "64" reverses out in Paper. Ring + disc are both sized
+   in em off a single font-size clamp, so they scale in lockstep with the
+   number itself — the old SVG-radius-vs-rem-text mismatch is exactly what
+   made the previous disc read as a barely-visible dot behind giant type.
+   This is the one filled/solid surface in the scene; every other element
+   stays outlined paper-forward, so the eye has exactly one place to land. */
+.mg-hub-medallion-wrap{
+  font-size:clamp(4rem, 1rem + 7vw, 9rem);
+  width:2.02em;height:2.02em;margin:0 auto;border-radius:50%;
+  border:3px solid var(--ink);
+  display:flex;align-items:center;justify-content:center;
+}
+.mg-hub-medallion{
+  width:1.56em;height:1.56em;border-radius:50%;background:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+}
+.mg-hub-num{font:800 .92em/1 var(--sans);letter-spacing:-.03em;color:var(--paper);}
+
+.mg-hub-node{position:absolute;transform:translate(-50%,-50%);z-index:4;width:clamp(130px,13vw,192px);padding:clamp(12px,1.2vw,16px) clamp(13px,1.4vw,18px);
+  border-radius:3px;background:none;border:2px solid var(--ink);text-align:center;}
+.mg-hub-node .mg-stat-md{font-size:clamp(1.15rem,.8rem + 1.3vw,1.7rem);color:var(--ink);}
 .mg-hub-foot{position:absolute;bottom:clamp(30px,6vh,52px);left:0;right:0;text-align:center;padding:0 var(--edge-sm);}
 
 @media screen and (max-width:760px){
@@ -427,6 +543,7 @@ html,body{margin:0;padding:0;background:var(--ink);overflow:hidden;font-family:v
      that position:relative (unlike static) would otherwise re-apply as
      relative offsets. */
   .mg-hub-node{position:relative;left:auto !important;top:auto !important;transform:none;width:100%;max-width:340px;}
+  .mg-hub-medallion-wrap{font-size:clamp(3.6rem,2.2rem + 9vw,5rem);}
   .mg-hub-nodes{display:flex;flex-direction:column;gap:10px;width:100%;align-items:center;}
 }
 .mg-hub-nodes{display:contents;}
@@ -440,6 +557,42 @@ html,body{margin:0;padding:0;background:var(--ink);overflow:hidden;font-family:v
 #flashOverlay{position:absolute;inset:0;z-index:15;background:#F4EFE8;opacity:0;pointer-events:none;}
 #flashOverlay.flash{animation:mgFlash 240ms linear;}
 @media (prefers-reduced-motion: reduce){ #flashOverlay.flash{animation:none;} }
+
+/* ============================================================
+   Directional transition choreography — scoped to exactly four
+   boundaries (see js/deck.js VT_PAIRS): 1↔2, 6↔7, 7↔8, 9↔10.
+   Everything else keeps today's hard-cut behavior untouched.
+
+   js/deck.js tags the outgoing scene `mg-content-old` and the
+   incoming scene `mg-content-new` right around the DOM mutation
+   inside document.startViewTransition(). Forward nav (deeper into
+   the deck) reads as "the page continuing downward": incoming
+   content rises in from the bottom, outgoing content exits upward.
+   Backward nav mirrors it. html[data-nav-dir] carries the flag.
+   ============================================================ */
+@keyframes mgVtExitUp{from{transform:translateY(0);opacity:1;}to{transform:translateY(-72px);opacity:0;}}
+@keyframes mgVtExitDown{from{transform:translateY(0);opacity:1;}to{transform:translateY(72px);opacity:0;}}
+@keyframes mgVtEnterFromBottom{from{transform:translateY(72px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+@keyframes mgVtEnterFromTop{from{transform:translateY(-72px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+
+::view-transition-old(mg-content-old){animation:520ms cubic-bezier(.4,0,.2,1) both mgVtExitUp;}
+::view-transition-new(mg-content-new){animation:520ms cubic-bezier(.16,.82,.28,1) both mgVtEnterFromBottom;}
+html[data-nav-dir="back"] ::view-transition-old(mg-content-old){animation-name:mgVtExitDown;}
+html[data-nav-dir="back"] ::view-transition-new(mg-content-new){animation-name:mgVtEnterFromTop;}
+
+/* Shared anchors that morph position/size across three of the four
+   boundaries (the browser's built-in FLIP behavior for a same-named
+   element present in both old and new snapshots — no keyframes
+   needed, just letting geometry differ). 1↔2 has no natural shared
+   element (Manifesto copy vs. the Logo mark) so it relies on the
+   slide + grid recolor alone. */
+::view-transition-group(mg-anchor){animation-duration:620ms;animation-timing-function:cubic-bezier(.4,0,.2,1);}
+
+::view-transition-old(mg-grid),::view-transition-new(mg-grid){animation-duration:620ms;animation-timing-function:ease;}
+
+@media (prefers-reduced-motion: reduce){
+  ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none !important;}
+}
 
 #panelOverlay{position:absolute;inset:0;z-index:20;background:linear-gradient(180deg,var(--ink),var(--ink-2));animation:mgFade .35s both;display:none;overflow:auto;}
 #panelOverlay.show{display:block;}
