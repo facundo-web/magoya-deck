@@ -13,18 +13,18 @@ Salida del look "Matrix" (negro + verde neón + monospace) hacia el sistema "edi
 **Fase 2 — 7 decisiones cerradas del handoff de diseño (✅ hecho, live):**
 Set de íconos normalizado, fondo ambiente reducido, Proof hub rediseñado ("Plano de lote"), sistema de flourishes a silueta rellena, anillo de cantidad en Results, transición con destello papel↔tinta, carátula de PDF con logo de cliente. Detalle en [`DESIGN-BRIEFS.md`](DESIGN-BRIEFS.md).
 
-## Lo que falta — y por qué necesita su mirada, no la mía sola
+## Los 4 elementos que estaban abiertos (✅ implementados, live — pendiente de mirada de Varu/Pato)
 
-El handoff de diseño dejó **4 elementos con 6 direcciones cada uno, ninguna elegida todavía** — a propósito, porque son las piezas donde el "cómo se ve" define bastante de cómo se *siente* usar el deck, y esa decisión es de ustedes tres, no mía. Para esta fase armé **exploraciones reales** (no solo texto) de cada una, con 3 agentes de diseño independientes por ítem + revisión cruzada, para que tengan algo concreto para mirar y elegir — igual que hicimos con el fondo/responsive al principio de esta sesión.
+El handoff de diseño había dejado **4 elementos con 6 direcciones cada uno, ninguna elegida**. Para esta fase armé **exploraciones reales** (2 direcciones por elemento, código funcionando, no solo texto) + revisión adversarial comparando ambas con screenshots reales — y ya implementé la dirección ganadora de cada una en el deck real. Quedan **live, pero a confirmar por ustedes tres** — si alguna no cierra, se ajusta o se revierte sin drama.
 
-| # | Elemento | Por qué importa | Estado |
+| # | Elemento | Qué se implementó | Por qué esa y no la otra |
 |---|---|---|---|
-| 5 | **Diagramas de los 3 Pilares** (escenas 4-6) | Hoy cada pilar improvisa un dispositivo visual distinto (nube de tags / formas morphing / cadena de pills) — deberían leerse como un mismo argumento contado en tres partes | 🔄 en exploración |
-| 6 | **Lenguaje de cards/contenedores** | Las cards de Method/Capabilities/Results son rectángulos con sombra genérica — con el fondo ya resuelto a papel, esta es la pieza que más define si el deck "se siente Magoya" o "se siente Bootstrap" | 🔄 en exploración |
-| 7 | **Portada en vivo (escena 0)** | Es lo primero que ve un prospecto y hoy es casi vacía — una sola línea de texto | 🔄 en exploración |
-| 10 | **Affordance de los nodos del hub** | El momento más interactivo del deck (Proof) no avisa que se puede clickear, sobre todo en mobile/touch | 🔄 en exploración |
+| 5 | **Diagramas de los 3 Pilares** (escenas 4-6) | Una sola gramática de diagrama (conectores punteados + nodos con dot) reutilizada en los tres, tomada del propio Proof hub — así el tríptico "ensaya" la escena 7 en vez de competir con ella | La alternativa (un marco compartido sobre los 3 dispositivos originales) no resolvía el problema real — seguían siendo 3 lenguajes distintos, solo con un borde común |
+| 6 | **Lenguaje de cards** (Method/Capabilities/Results) | Textura de grano fino + esquinas asimétricas "cortadas a mano" + sombra cálida despareja | La alternativa (card con borde, sin sombra, rotación sutil) no se notaba a tamaño real — quedaba una caja plana, más "wireframe sin terminar" que "elegida a propósito" |
+| 7 | **Portada en vivo** (escena 0) | La única línea de copy bloqueada, a escala grande, revelada palabra por palabra | La alternativa (motivo ambiente) tenía un bug real de contraste — el texto quedaba casi invisible en la captura final, no era una cuestión de gusto |
+| 10 | **Affordance del hub** | Una marca de esquina persistente (mismo trazo de 1.6px que los íconos), visible siempre, no solo al hacer hover | La alternativa (borde punteado) se lee como "placeholder / sin terminar" — y como el deck también se exporta a PDF estático, esa sería la única versión que un cliente vería, para siempre |
 
-*(Corriendo en background mientras arman esto — aviso en cuanto tenga las 4 propuestas con screenshots reales para que las vean los tres.)*
+Detalle técnico completo de qué se construyó y qué se descartó, en el historial de commits del repo.
 
 ## Conflictos de marca a resolver — no bloquean el deck, pero hay que cerrarlos
 
@@ -48,4 +48,4 @@ Lo que **no** delegué a un agente: las 5 decisiones de la sección de conflicto
 
 ## Próximo paso concreto
 
-Cuando termine la exploración de los 4 elementos abiertos, les mando el comparativo (como hice con el fondo/responsive) para que Varu y Pato elijan dirección — recién ahí implemento en el deck real, para no repetir el ciclo de "implementar → no les cierra → rehacer".
+Los 4 elementos ya están live en [facundo-web.github.io/magoya-deck](https://facundo-web.github.io/magoya-deck/). Falta que Varu y Pato lo miren y digan si alguno no cierra — y cerrar los 5 conflictos de marca de arriba, que son decisiones de negocio/contenido, no de diseño.
