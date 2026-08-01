@@ -15,6 +15,9 @@
   --ink-4:#2A5C42;        /* hairline-adjacent panel, lighter still */
   --paper:#ECE3DB;        /* Crema — "the page" */
   --paper-dim:#DFD3C3;    /* slightly deeper paper, secondary surfaces */
+  --white:#FFFFFF;        /* real white — cards/containers on paper scenes,
+                             so they pop off the Crema page instead of
+                             reading as one flat washed-out tone */
   --accent:#00DE68;       /* Verde digital — the highlighter, used sparingly */
   --accent-deep:#0E6B36;  /* accent role, readable as text/numbers on paper */
   --accent-ink:#0C2A1B;   /* text-safe dark to pair with accent fills */
@@ -261,7 +264,7 @@ body.vt-grid-boost .bg-grid{opacity:.09;transition:opacity .56s ease;}
 .mg-chipset{display:flex;flex-wrap:wrap;gap:10px;}
 
 /* ---- components ---- */
-.mg-card{background:var(--paper);color:var(--ink);border-radius:var(--radius);padding:clamp(18px,2vw,28px);
+.mg-card{background:var(--white);color:var(--ink);border-radius:var(--radius);padding:clamp(18px,2vw,28px);
   box-shadow:0 1px 0 rgba(19,56,37,.08), 0 18px 30px -18px rgba(4,14,9,.55);
   position:relative;}
 .mg-card .mg-h4, .mg-card .mg-h3{color:var(--ink);}
@@ -604,13 +607,41 @@ body.vt-grid-boost .bg-grid{opacity:.09;transition:opacity .56s ease;}
    content rises in from the bottom, outgoing content exits upward.
    Backward nav mirrors it. html[data-nav-dir] carries the flag.
    ============================================================ */
-@keyframes mgVtExitUp{from{transform:translateY(0);opacity:1;}to{transform:translateY(-72px);opacity:0;}}
-@keyframes mgVtExitDown{from{transform:translateY(0);opacity:1;}to{transform:translateY(72px);opacity:0;}}
-@keyframes mgVtEnterFromBottom{from{transform:translateY(72px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-@keyframes mgVtEnterFromTop{from{transform:translateY(-72px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+/* Distance and staging matter here as much as direction: the first pass at
+   this (72px, opacity+translate moving together for the whole duration)
+   read as a plain fade with a barely-visible nudge — at 1920x1080 a 72px
+   shift is only ~4% of the frame, and fading in step with it means it's
+   already ghostly before it's moved anywhere. Fixed by (a) a much larger
+   throw (240px, ~22% of frame height — a real drag, not a twitch), and
+   (b) staging opacity separately from position: the exit stays fully
+   opaque while it does MOST of its travel, only fading in the last third;
+   the enter fades in early while still completing its slide — so in both
+   cases the eye gets to see the element actually move before it vanishes
+   or while it's arriving, instead of position and opacity racing to zero
+   together. Slower (680ms) so the motion reads instead of blurring past. */
+@keyframes mgVtExitUp{
+  0%  {transform:translateY(0);      opacity:1;}
+  60% {transform:translateY(-160px); opacity:1;}
+  100%{transform:translateY(-240px); opacity:0;}
+}
+@keyframes mgVtExitDown{
+  0%  {transform:translateY(0);     opacity:1;}
+  60% {transform:translateY(160px); opacity:1;}
+  100%{transform:translateY(240px); opacity:0;}
+}
+@keyframes mgVtEnterFromBottom{
+  0%  {transform:translateY(240px); opacity:0;}
+  40% {transform:translateY(140px); opacity:1;}
+  100%{transform:translateY(0);     opacity:1;}
+}
+@keyframes mgVtEnterFromTop{
+  0%  {transform:translateY(-240px);opacity:0;}
+  40% {transform:translateY(-140px);opacity:1;}
+  100%{transform:translateY(0);     opacity:1;}
+}
 
-::view-transition-old(mg-content-old){animation:520ms cubic-bezier(.4,0,.2,1) both mgVtExitUp;}
-::view-transition-new(mg-content-new){animation:520ms cubic-bezier(.16,.82,.28,1) both mgVtEnterFromBottom;}
+::view-transition-old(mg-content-old){animation:680ms cubic-bezier(.4,0,.2,1) both mgVtExitUp;}
+::view-transition-new(mg-content-new){animation:680ms cubic-bezier(.16,.82,.28,1) both mgVtEnterFromBottom;}
 html[data-nav-dir="back"] ::view-transition-old(mg-content-old){animation-name:mgVtExitDown;}
 html[data-nav-dir="back"] ::view-transition-new(mg-content-new){animation-name:mgVtEnterFromTop;}
 
