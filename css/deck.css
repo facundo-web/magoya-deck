@@ -62,6 +62,7 @@ html,body{margin:0;padding:0;background:var(--ink);overflow:hidden;font-family:v
 @keyframes mgForm{0%{opacity:0;transform:scale(.3);}55%{opacity:0;}100%{opacity:1;transform:scale(1);}}
 @keyframes mgPulseRing{0%{transform:scale(.92);opacity:.5;}50%{transform:scale(1);opacity:.85;}100%{transform:scale(.92);opacity:.5;}}
 @keyframes mgDash{to{stroke-dashoffset:0;}}
+@keyframes mgCoverWordIn{0%{opacity:0;transform:translateY(.5em) scale(.97);}100%{opacity:1;transform:translateY(0) scale(1);}}
 
 @media (prefers-reduced-motion: reduce){
   *{animation:none !important;transition:none !important;}
@@ -164,6 +165,21 @@ html,body{margin:0;padding:0;background:var(--ink);overflow:hidden;font-family:v
 .on-ink{color:var(--on-ink);}
 .on-accent{color:var(--accent);}
 
+/* Cover entrance (scene 0) — the single locked copy line at very large
+   scale, revealed word-by-word. Pure typography + pacing: no icon, rule,
+   or flourish added, and no wordmark here (that reveal belongs to Logo,
+   scene 2). Flex+gap keeps natural line-wrap behavior; the literal spaces
+   in the markup are left in place so the text still reads correctly if
+   CSS ever fails to load or is extracted as plain text. */
+.mg-cover-line{
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;
+  column-gap:.34em;row-gap:.08em;
+  max-width:min(1360px,92vw);margin:0;
+  font:800 clamp(2.3rem, .7rem + 8.6vw, 7.4rem)/1.05 var(--sans);
+  letter-spacing:-.022em;color:var(--scene-fg);
+}
+.mg-cover-word{display:inline-block;animation:mgCoverWordIn 1s cubic-bezier(.16,.82,.28,1) both;animation-delay:calc(var(--i) * .17s + .1s);}
+
 /* Hand-drawn accent flourish system — direction "4b Presión variable".
    Filled silhouettes, NOT strokes: a constant-width stroke is exactly the
    "drawn by a machine" tell we're avoiding. Width tapers 1.2px at the tips
@@ -191,6 +207,73 @@ html,body{margin:0;padding:0;background:var(--ink);overflow:hidden;font-family:v
 .mg-card .mg-eyebrow{color:var(--accent-deep);}
 .mg-card-dark{background:var(--ink-3);color:var(--on-ink);border:1px solid var(--hair-ink);border-radius:var(--radius);padding:clamp(18px,2vw,28px);}
 
+/* ============================================================
+   Paper-craft cards — Method (10) / Capabilities (11) / Results
+   (12) only. Same .mg-card surface, dressed as cut cardstock
+   instead of a flat SaaS panel: a scaled-down paper-grain fill
+   (same turbulence technique as .bg-grain, finer + warmer), an
+   uneven hand-cut top edge (asymmetric radius per corner, varied
+   card-to-card so the row never reads as one stamped mould), and
+   a warm, asymmetric shadow that falls like a card resting
+   unevenly on a surface rather than a uniform elevation drop.
+   Scoped to these three scenes so the exploration panel's own
+   #panelDetail.mg-card and the Discovery scene's .mg-card-dark
+   are untouched. ============================================ */
+[data-scene="10"] .mg-card,
+[data-scene="11"] .mg-card,
+[data-scene="12"] .mg-card{
+  overflow:hidden; /* clips the grain fill to the hand-cut corners */
+}
+[data-scene="10"] .mg-card::before,
+[data-scene="11"] .mg-card::before,
+[data-scene="12"] .mg-card::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:inherit;
+  mix-blend-mode:multiply;opacity:.11;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='56'><filter id='cg'><feTurbulence type='fractalNoise' baseFrequency='1.25' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.32  0 0 0 0 0.2  0 0 0 0 0.09  0 0 0 0.11 0'/></filter><rect width='100%25' height='100%25' filter='url(%23cg)'/></svg>");
+  background-size:56px 56px;
+}
+[data-scene="10"] .mg-card > *,
+[data-scene="11"] .mg-card > *,
+[data-scene="12"] .mg-card > *{position:relative;z-index:1;}
+
+/* hand-cut corners + warm uneven shadow — four distinct recipes so a
+   row of cards reads as separately-cut pieces of stock, not a grid */
+[data-scene="10"] .mg-row > .mg-card:nth-child(4n+1),
+[data-scene="11"] .mg-row > .mg-card:nth-child(4n+1),
+[data-scene="12"] .mg-row > .mg-card:nth-child(4n+1){
+  border-radius:3px 22px 8px 15px;
+  box-shadow:6px 12px 22px -13px rgba(74,42,14,.5), -2px -2px 0 -1px rgba(255,252,246,.4) inset, 3px 18px 32px -22px rgba(74,42,14,.32);
+}
+[data-scene="10"] .mg-row > .mg-card:nth-child(4n+2),
+[data-scene="11"] .mg-row > .mg-card:nth-child(4n+2),
+[data-scene="12"] .mg-row > .mg-card:nth-child(4n+2){
+  border-radius:20px 4px 13px 9px;
+  box-shadow:-5px 13px 22px -13px rgba(74,42,14,.46), 3px -2px 0 -1px rgba(255,252,246,.36) inset, -3px 19px 30px -22px rgba(74,42,14,.3);
+  transform:translateY(3px);
+}
+[data-scene="10"] .mg-row > .mg-card:nth-child(4n+3),
+[data-scene="11"] .mg-row > .mg-card:nth-child(4n+3),
+[data-scene="12"] .mg-row > .mg-card:nth-child(4n+3){
+  border-radius:6px 25px 4px 18px;
+  box-shadow:5px 14px 24px -13px rgba(74,42,14,.48), -3px -2px 0 -1px rgba(255,252,246,.38) inset, 2px 18px 32px -22px rgba(74,42,14,.32);
+  transform:translateY(-2px);
+}
+[data-scene="10"] .mg-row > .mg-card:nth-child(4n+4),
+[data-scene="11"] .mg-row > .mg-card:nth-child(4n+4),
+[data-scene="12"] .mg-row > .mg-card:nth-child(4n+4){
+  border-radius:22px 6px 16px 4px;
+  box-shadow:-6px 12px 22px -13px rgba(74,42,14,.46), 2px -2px 0 -1px rgba(255,252,246,.34) inset, -2px 17px 30px -22px rgba(74,42,14,.3);
+  transform:translateY(4px);
+}
+@media screen and (max-width:900px){
+  /* stacked single column: the shadow/radius stays (still reads as
+     hand-cut stock) but drop the vertical jitter so cards don't
+     leave uneven gaps in a one-up list */
+  [data-scene="10"] .mg-row > .mg-card,
+  [data-scene="11"] .mg-row > .mg-card,
+  [data-scene="12"] .mg-row > .mg-card{transform:none;}
+}
+
 .mg-divider{height:1px;background:var(--hair-ink);border:none;margin:0;}
 .mg-divider.on-paper{background:var(--hair-paper);}
 
@@ -210,9 +293,24 @@ html,body{margin:0;padding:0;background:var(--ink);overflow:hidden;font-family:v
   transition:border-color .15s,background .15s;}
 .mg-round-btn:hover{border-color:var(--accent);background:rgba(0,222,104,.10);}
 
-.mg-node{transition:border-color .18s, box-shadow .18s, transform .18s, background .18s;cursor:pointer;}
+.mg-node{outline:none;transition:border-color .18s, box-shadow .18s, transform .18s, background .18s;cursor:pointer;}
 .mg-node:hover{border-color:var(--accent);box-shadow:0 14px 34px -14px rgba(0,222,104,.35);transform:translate(-50%,-50%) translateY(-4px);}
 @media screen and (max-width:760px){ .mg-node:hover{transform:translateY(-2px);} }
+
+/* Always-on "click me" cue for hub nodes: a small open-corner bracket,
+   monoline-matched to the icon set (1.6px stroke), flush with the box's
+   own corner (a crop-mark, not a floating glyph), quiet at rest so it
+   doesn't compete with the stat, full-strength on hover/focus. Visible
+   on touch devices too — no hover dependency. */
+.mg-node::after{
+  content:'';position:absolute;top:0;right:0;width:clamp(11px,1.1vw,14px);height:clamp(11px,1.1vw,14px);
+  border-top:1.6px solid var(--ink);border-right:1.6px solid var(--ink);
+  opacity:.5;transition:border-color .18s, opacity .18s;pointer-events:none;
+}
+.mg-node:hover::after{border-color:var(--accent);opacity:1;}
+.mg-node:focus-visible{border-color:var(--accent);box-shadow:0 14px 34px -14px rgba(0,222,104,.35);}
+.mg-node:focus-visible::after{border-color:var(--accent);opacity:1;}
+.mg-hub-node:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
 
 .mg-chip{transition:all .14s;}
 
@@ -232,15 +330,61 @@ html,body{margin:0;padding:0;background:var(--ink);overflow:hidden;font-family:v
 /* Pillar layout: eyebrow row w/ icon */
 .mg-pillar-head{display:flex;align-items:center;gap:14px;}
 
-/* animated "form" mini-diagram in pillar 2 */
-.mg-formviz{position:relative;width:clamp(210px,20vw,300px);height:clamp(84px,8vw,120px);}
-.mg-formviz .sq{position:absolute;top:25%;width:22%;height:50%;border:1.5px dashed var(--scene-hair);border-radius:6px;}
-.mg-formviz .ring{position:absolute;left:32%;top:22%;width:24%;height:56%;border:1.5px solid rgba(0,222,104,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;}
-.mg-formviz .dot{width:22%;height:22%;border-radius:50%;background:var(--accent);box-shadow:0 0 16px rgba(0,222,104,.65);}
+/* ============ shared pillar diagram (scenes 4–6) ============
+   One connective-diagram grammar for the "Three things no one else
+   combines" triptych: dashed accent-deep connectors + outlined nodes,
+   exactly the visual language the Proof hub (scene 7) uses — these
+   three scenes quietly rehearse it before scene 7 pays it off. Each
+   pillar gets its own arrangement (cluster / converge / loop) but
+   shares stroke weight, color logic, and pulse timing. Motion budget:
+   one pulsing accent per scene (loop's four are staggered copies of a
+   single traveling highlight, not four separate motions). */
+.mg-pdiagram{position:relative;width:100%;}
+.mg-pdiagram-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+.mg-pdiagram-connector{fill:none;stroke:var(--accent-deep);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1 5;}
+.mg-pdiagram-input{fill:none;stroke:var(--scene-hair);stroke-width:1.6;stroke-dasharray:4 3;}
+.mg-pdiagram-ring{fill:none;stroke:var(--accent-deep);stroke-width:1.6;}
+.mg-pdiagram-dot{fill:var(--accent-deep);}
+.mg-pdiagram-pulse{fill:none;stroke:var(--accent-deep);stroke-width:1.4;stroke-dasharray:3 6;animation:mgPulseRing 4s ease-in-out infinite;}
 
-/* method loop row (pillar 3) */
-.mg-loop-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.mg-loop-sep{color:var(--muted-ink-dim);font-size:16px;}
+/* Anchor is the DOT, never the box center — the wrapper's left/top edge
+   is the dot's position, so connector endpoints always meet the dot
+   regardless of how wide a given label is. Default grows the label to
+   the right; .is-left (row-reverse, positioned via `right`) grows it
+   left, for nodes that would otherwise crowd their own incoming lines. */
+.mg-pnode{position:absolute;transform:translateY(-50%);display:inline-flex;align-items:center;gap:7px;white-space:nowrap;}
+.mg-pnode.is-left{flex-direction:row-reverse;}
+.mg-pnode-dot{width:10px;height:10px;border-radius:50%;border:1.4px solid var(--ink);background:var(--paper-dim);flex:none;}
+.mg-pnode-label{font:600 clamp(.7rem,.64rem+.25vw,.85rem)/1 var(--sans);color:var(--scene-fg);background:var(--paper-dim);padding:1px 3px;}
+.mg-pnode.is-hub .mg-pnode-dot{background:var(--accent-deep);border-color:var(--accent-deep);box-shadow:0 0 9px rgba(14,107,54,.4);}
+.mg-pnode.is-hub .mg-pnode-label{color:var(--accent-deep);font-weight:700;}
+.mg-pdiagram-arrow{position:absolute;transform:translate(-50%,-50%);color:var(--scene-muted-dim);font-size:14px;line-height:1;}
+.mg-pdiagram-loopmark{position:absolute;transform:translate(-50%,-50%);color:var(--accent-deep);font-size:16px;line-height:1;}
+
+/* pillar 1 — domain cluster */
+.mg-pdiagram--cluster{aspect-ratio:640/240;max-width:640px;}
+
+/* pillar 2 — inputs converge on one fit (fully abstract, no text) */
+.mg-pdiagram--converge{aspect-ratio:640/200;max-width:460px;}
+
+/* pillar 3 — sequential loop */
+.mg-pdiagram--loop{aspect-ratio:640/150;max-width:620px;}
+
+@media screen and (max-width:760px){
+  /* Same fallback strategy already used by the Proof hub: drop the
+     SVG connector layer and let labeled nodes stack as a plain list. */
+  .mg-pdiagram--cluster .mg-pdiagram-svg,
+  .mg-pdiagram--loop .mg-pdiagram-svg{display:none;}
+  .mg-pdiagram--cluster,.mg-pdiagram--loop{position:static;aspect-ratio:auto;height:auto;display:flex;flex-wrap:wrap;gap:11px 16px;}
+  .mg-pdiagram--cluster .mg-pnode,.mg-pdiagram--loop .mg-pnode{position:static;transform:none;right:auto;flex-direction:row;}
+  .mg-pdiagram--loop{flex-direction:column;flex-wrap:nowrap;align-items:flex-start;gap:9px;}
+  .mg-pdiagram--loop .mg-pdiagram-arrow,.mg-pdiagram--loop .mg-pdiagram-loopmark{display:none;}
+  /* Sequence reads fine from stacking order alone; the loop-back is
+     already spelled out in the caption below, so no arrow glyph needed
+     here — keeps every node position:static with no left/right offsets
+     from the desktop layout able to leak back in. */
+  .mg-pdiagram--converge{max-width:min(420px,88vw);}
+}
 
 /* ---- Proof hub ---- */
 .mg-hub{position:absolute;inset:0;}
@@ -261,7 +405,12 @@ html,body{margin:0;padding:0;background:var(--ink);overflow:hidden;font-family:v
   .mg-hub{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;padding:clamp(64px,12vh,96px) var(--edge-sm) clamp(90px,14vh,120px);gap:14px;}
   .mg-hub-head,.mg-hub-foot{position:static;padding:0;}
   .mg-hub-center{position:static;transform:none;width:100%;order:-1;margin-bottom:6px;}
-  .mg-hub-node{position:static;transform:none;width:100%;max-width:340px;}
+  /* position:relative (not static) so the ::after corner mark has a
+     containing block scoped to the card; left/top must be neutralized
+     since they're inline percentage styles for the desktop radial layout
+     that position:relative (unlike static) would otherwise re-apply as
+     relative offsets. */
+  .mg-hub-node{position:relative;left:auto !important;top:auto !important;transform:none;width:100%;max-width:340px;}
   .mg-hub-nodes{display:flex;flex-direction:column;gap:10px;width:100%;align-items:center;}
 }
 .mg-hub-nodes{display:contents;}
@@ -350,6 +499,7 @@ body.paper-active .mg-round-btn:hover{border-color:var(--accent-deep);background
   .mg-display{font-size:clamp(1.9rem,7vw,2.6rem);}
   .mg-h1{font-size:clamp(1.6rem,6.5vw,2.2rem);}
   .mg-stat{font-size:clamp(3.2rem,20vw,4.6rem);}
+  .mg-cover-line{font-size:clamp(1.9rem,10.5vw,3rem);column-gap:.26em;}
 }
 
 /* ---- print / PDF mode: every scene stacked as its own fixed 1920x1080 page ---- */
@@ -361,6 +511,13 @@ body.paper-active .mg-round-btn:hover{border-color:var(--accent-deep);background
   #stage::after{content:none;}
   .scene{position:relative;display:block !important;width:1920px;height:1080px;page-break-after:always;overflow:hidden;}
   #netCanvas,.bg-grid,.bg-grain,.bg-glow{display:none;}
+  /* feTurbulence data-URIs rasterize huge in Chrome's print-to-pdf (one
+     card's worth of noise repeated at full print resolution, x12 cards)
+     — a 900KB PDF became 17MB with this on. The grain is a subtle,
+     screen-only texture; skip it in the exported PDF entirely. */
+  [data-scene="10"] .mg-card::before,
+  [data-scene="11"] .mg-card::before,
+  [data-scene="12"] .mg-card::before{display:none;}
   #navDots,#navHint,#panelOverlay,.mg-nav-arrows,.mg-panel-close{display:none !important;}
   * { animation:none !important; }
 

@@ -215,6 +215,16 @@
   document.getElementById('btnClosePanel').addEventListener('click', closePanel);
   document.querySelectorAll('[data-open]').forEach(el => {
     el.addEventListener('click', () => openPanel(el.dataset.open));
+    // Keyboard affordance for the Proof hub nodes: Enter/Space opens the
+    // panel like a click. stopPropagation keeps the global onKey scene
+    // navigator (which also binds Space) from firing at the same time.
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        e.stopPropagation();
+        openPanel(el.dataset.open);
+      }
+    });
   });
 
   navDotsEl.innerHTML = NAV_GROUPS.map((g, i) => `
