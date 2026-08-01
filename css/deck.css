@@ -140,7 +140,15 @@ body.vt-grid-boost .bg-grid{opacity:.09;transition:opacity .56s ease;}
 .mg-photo-bg::after{content:"";position:absolute;inset:0;}
 .scene:not(.paper-scene) .mg-photo-bg::after{background:linear-gradient(180deg, rgba(19,56,37,.55), rgba(15,46,30,.82));}
 .scene.paper-scene .mg-photo-bg::after{background:linear-gradient(180deg, rgba(236,227,219,.72), rgba(223,211,195,.88));}
-.scene > .mg-center,.scene > .mg-left,.scene > .mg-fill{position:relative;z-index:1;}
+/* No z-index/position needed on .mg-center/.mg-left/.mg-fill to sit above
+   .mg-photo-bg — both are position:absolute at the same (auto/0) stacking
+   level, so plain DOM order already paints the content above the photo
+   layer (the photo div is inserted before the content div in index.html).
+   An earlier version of this rule added position:relative here globally,
+   which — having higher specificity than the base .mg-center{position:
+   absolute} rule — silently overrode it on EVERY scene, not just the two
+   with a photo slot, collapsing the full-bleed centered layout into
+   cramped content-sized boxes deck-wide. Do not reintroduce it. */
 
 /* ---- scenes ---- */
 .scene{position:absolute;inset:0;display:none;}
