@@ -271,7 +271,6 @@
     else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); setScene(scene - 1); }
   }
 
-  document.getElementById('btnExplore').addEventListener('click', () => setScene(3));
   document.getElementById('btnNext').addEventListener('click', () => { if (panelKey) { closePanel(); return; } setScene(scene + 1); });
   document.getElementById('btnPrev').addEventListener('click', () => { if (panelKey) { closePanel(); return; } setScene(scene - 1); });
   document.getElementById('btnClosePanel').addEventListener('click', closePanel);
