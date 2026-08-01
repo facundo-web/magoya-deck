@@ -120,11 +120,20 @@ html,body{margin:0;padding:0;background:var(--ink);overflow:hidden;font-family:v
 #cornerMark.show{display:block;}
 
 /* ---- generic layout scaffolds ---- */
-.mg-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 var(--edge);}
+/* --nav-clear reserves room on the right for #navDots, which sits fixed
+   at right:var(--edge-sm) down to the 760px breakpoint (below that it
+   relocates to a bottom pill — see the 760px query below, which reverts
+   to symmetric padding there). Without this, centered/left-aligned text
+   wide enough to approach the right edge can render underneath the nav
+   labels instead of stopping short of them — confirmed at ~800px with
+   the Manifesto headline. */
+:root{ --nav-clear:104px; }
+.mg-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 calc(var(--edge) + var(--nav-clear)) 0 var(--edge);}
 .mg-center > *{max-width:100%;}
-.mg-left{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 var(--edge);}
+.mg-left{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 calc(var(--edge) + var(--nav-clear)) 0 var(--edge);}
 .mg-left-col{width:100%;max-width:min(880px,94%);}
-.mg-fill{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:0 var(--edge);}
+.mg-fill{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:0 calc(var(--edge) + var(--nav-clear)) 0 var(--edge);}
+.mg-fill:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
 .mg-fill-col{width:100%;max-width:1580px;}
 
 .mg-display,.mg-h1,.mg-h2,.mg-h3,.mg-h4,.mg-body,.mg-body-lg,.mg-small,.mg-quote,.mg-eyebrow,.mg-caption{max-width:100%;}
@@ -484,13 +493,22 @@ body.paper-active .mg-round-btn:hover{border-color:var(--accent-deep);background
   .mg-nav-arrows{left:0;right:0;bottom:clamp(16px,2.6vh,26px);justify-content:center;width:100%;}
   #navHint{display:none !important;}
   .mg-hub{padding-bottom:clamp(130px,20vh,170px) !important;}
+  /* #navDots just relocated to a bottom pill above, so it no longer
+     competes with centered/left content on the right — drop the
+     reservation added for wider viewports. */
+  .mg-center,.mg-left{padding:0 var(--edge-sm);}
+  .mg-fill{padding-right:var(--edge-sm);}
 }
 
 /* ============ responsive scene overrides ============ */
 @media screen and (max-width:900px){
-  .mg-center{padding:0 var(--edge-sm);}
-  .mg-left{padding:0 var(--edge-sm);}
-  .mg-fill{padding:clamp(70px,12vh,96px) var(--edge-sm) clamp(130px,20vh,170px);align-items:flex-start;overflow-y:auto;}
+  /* #navDots is still docked at right:var(--edge-sm) down to 760px (see
+     that breakpoint below), so the nav-clearance reservation must
+     continue here too — this query would otherwise reset padding back
+     to plain symmetric var(--edge-sm) and reintroduce the overlap. */
+  .mg-center{padding:0 calc(var(--edge-sm) + var(--nav-clear)) 0 var(--edge-sm);}
+  .mg-left{padding:0 calc(var(--edge-sm) + var(--nav-clear)) 0 var(--edge-sm);}
+  .mg-fill{padding:clamp(70px,12vh,96px) calc(var(--edge-sm) + var(--nav-clear)) clamp(130px,20vh,170px) var(--edge-sm);align-items:flex-start;overflow-y:auto;}
   .mg-fill-col{max-width:100%;}
   .mg-row{gap:12px;}
   .mg-row > *{flex:1 1 100%;}

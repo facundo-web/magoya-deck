@@ -30,7 +30,7 @@
 </section>
 
 <div id="stageWrap">
-  <div id="stage">
+  <main id="stage">
     <canvas id="netCanvas" width="1920" height="1080"></canvas>
     <div class="bg-glow"></div>
     <div class="bg-grid"></div>
@@ -99,10 +99,10 @@
             <div class="mg-pnode is-hub is-left" style="right:89.06%;top:50%;"><span class="mg-pnode-dot"></span><span class="mg-pnode-label">Magoya</span></div>
             <div class="mg-pnode" style="left:46.88%;top:13.33%;"><span class="mg-pnode-dot"></span><span class="mg-pnode-label">Seeds</span></div>
             <div class="mg-pnode" style="left:70.31%;top:8.33%;"><span class="mg-pnode-dot"></span><span class="mg-pnode-label">Crop Protection</span></div>
-            <div class="mg-pnode" style="left:93.75%;top:24.17%;"><span class="mg-pnode-dot"></span><span class="mg-pnode-label">Machine Data</span></div>
+            <div class="mg-pnode is-left" style="right:6.25%;top:24.17%;"><span class="mg-pnode-dot"></span><span class="mg-pnode-label">Machine Data</span></div>
             <div class="mg-pnode" style="left:48.44%;top:50%;"><span class="mg-pnode-dot"></span><span class="mg-pnode-label">Agronomy</span></div>
             <div class="mg-pnode" style="left:75%;top:55%;"><span class="mg-pnode-dot"></span><span class="mg-pnode-label">Retail</span></div>
-            <div class="mg-pnode" style="left:95.31%;top:70%;"><span class="mg-pnode-dot"></span><span class="mg-pnode-label">Sustainability</span></div>
+            <div class="mg-pnode is-left" style="right:4.69%;top:70%;"><span class="mg-pnode-dot"></span><span class="mg-pnode-label">Sustainability</span></div>
             <div class="mg-pnode" style="left:51.56%;top:86.67%;"><span class="mg-pnode-dot"></span><span class="mg-pnode-label">Yield</span></div>
             <div class="mg-pnode" style="left:78.13%;top:90.83%;"><span class="mg-pnode-dot"></span><span class="mg-pnode-label">Field Operations</span></div>
           </div>
@@ -273,7 +273,7 @@
     </section>
 
     <section class="scene paper-scene" data-scene="10" data-label="Method" data-page="11">
-      <div class="mg-fill">
+      <div class="mg-fill" tabindex="0" role="region" aria-label="Scrollable section content">
         <div class="mg-fill-col">
           <div style="text-align:center;animation:mgSceneIn .8s .05s both;">
             <div class="mg-eyebrow center">The Magoya Method</div>
@@ -323,7 +323,7 @@
     </section>
 
     <section class="scene paper-scene" data-scene="11" data-label="Capabilities" data-page="12">
-      <div class="mg-fill">
+      <div class="mg-fill" tabindex="0" role="region" aria-label="Scrollable section content">
         <div class="mg-fill-col">
           <div style="text-align:center;animation:mgSceneIn .8s .05s both;">
             <div class="mg-eyebrow center">Capabilities</div>
@@ -387,7 +387,7 @@
     </section>
 
     <section class="scene paper-scene" data-scene="12" data-label="Results" data-page="13">
-      <div class="mg-fill">
+      <div class="mg-fill" tabindex="0" role="region" aria-label="Scrollable section content">
         <div class="mg-fill-col">
           <div style="text-align:center;animation:mgSceneIn .8s .05s both;">
             <div class="mg-eyebrow center">Problems we’ve helped solve</div>
@@ -487,14 +487,14 @@
       </div>
     </div>
 
-    <div id="navDots"></div>
+    <nav id="navDots" aria-label="Section navigation"></nav>
 
     <div class="mg-nav-arrows">
-      <button id="btnPrev" class="mg-round-btn">‹</button>
-      <button id="btnNext" class="mg-round-btn">›</button>
+      <button id="btnPrev" class="mg-round-btn" aria-label="Previous slide">‹</button>
+      <button id="btnNext" class="mg-round-btn" aria-label="Next slide">›</button>
     </div>
 
-  </div>
+  </main>
 </div>
 
 <script src="content/panels.js"></script>
