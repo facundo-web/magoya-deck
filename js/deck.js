@@ -129,7 +129,7 @@
       if (isActive && el.classList.contains('paper-scene')) activeIsPaper = true;
     });
     document.body.classList.toggle('paper-active', activeIsPaper);
-    cornerMark.src = activeIsPaper ? 'assets/logos/magoya-wordmark-green.svg' : 'assets/logos/magoya-wordmark-white.svg';
+    cornerMark.src = activeIsPaper ? 'assets/logos/magoya-wordmark-deep.svg' : 'assets/logos/magoya-wordmark-white.svg';
     cornerMark.classList.toggle('show', scene >= 3 && !panelKey);
     navHint.style.display = (scene !== 7 && scene < 13 && !panelKey) ? '' : 'none';
     panelOverlay.classList.toggle('show', !!panelKey);
@@ -160,7 +160,7 @@
     const bulletsHtml = (selItem.bullets && selItem.bullets.length) ? `
       <div class="mg-caption mg-panel-detail-group" style="margin-top:28px;">${cfg.bulletsLabel}</div>
       <div class="mg-panel-detail-bullets">
-        ${selItem.bullets.map(b => `<div class="mg-panel-detail-bullet"><span class="dot"></span><span>${b}</span></div>`).join('')}
+        ${selItem.bullets.map(b => `<div class="mg-panel-detail-bullet">${b}</div>`).join('')}
       </div>` : '';
 
     panelDetail.innerHTML = `
